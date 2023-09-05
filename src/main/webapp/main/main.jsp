@@ -1,5 +1,9 @@
+<%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String savedId = CookieManager.readCookie(request, "SavedId");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,7 +56,7 @@ if(session.getAttribute("UserId") == null) {
 						</colgroup>
 						<tr>
 							<th><img src="../images/login_tit01.gif" alt="아이디" /></th>
-							<td><input type="text" name="user_id" value="" class="login_input" /></td>
+							<td><input type="text" name="user_id" value="<%= savedId=="OFF" ? "" : savedId %>" class="login_input" /></td>
 							<td rowspan="2"><input type="image" src="../images/login_btn01.gif" alt="로그인" /></td>
 						</tr>
 						<tr>
@@ -61,7 +65,17 @@ if(session.getAttribute("UserId") == null) {
 						</tr>
 					</table>
 					<p>
-						<input type="checkbox" name="" value="" /><img src="../images/login_tit03.gif" alt="저장" />
+					<%
+					if (savedId.equals("")) {
+					%>
+						<input type="checkbox" name="savedId" value="1" /><img src="../images/login_tit03.gif" alt="저장" />
+					<%
+					} else {
+					%>
+						<input type="checkbox" name="savedId" value="1" checked /><img src="../images/login_tit03.gif" alt="저장" />
+					<%
+					}
+					%>
 						<a href="../member/id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>
 						<a href="../member/join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a>
 					</p>

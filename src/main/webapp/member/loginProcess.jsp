@@ -1,3 +1,4 @@
+<%@page import="utils.CookieManager"%>
 <%@page import="utils.JSFunction"%>
 <%@page import="membership.MemberDTO"%>
 <%@page import="membership.MemberDAO"%>
@@ -6,10 +7,19 @@
 <%
 String userId = request.getParameter("user_id");
 String userPwd = request.getParameter("user_pw");
+String chkVal = request.getParameter("savedId");
 
 MemberDAO dao = new MemberDAO();
 MemberDTO dto = dao.getMemberDTO(userId, userPwd);
 dao.close();
+
+// 쿠키 추가
+if (chkVal!=null && chkVal.equals("1")) {
+	CookieManager.makeCookie(response, "SavedId", userId, 60*60*24);
+// 쿠키 삭제
+} else {
+	CookieManager.deleteCookie(response, "SavedId");
+}
 
 if (dto.getId() != null) {
 	session.setAttribute("UserId", dto.getId());
