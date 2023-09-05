@@ -1,8 +1,25 @@
+<%@page import="space.board.BoardDTO"%>
+<%@page import="space.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
+<%
+String num = request.getParameter("num");
+BoardDAO dao = new BoardDAO();
+dao.updateVisitCount(num);
 
+BoardDTO dto = dao.selectView(num);
+dao.close();
+%>
+<script type="text/javascript">
+function deletePost() {
+	var comfirmed = confirm("정말로 삭제하겠습니까?");
+	if (comfirmed){
+		document.boardFrm.submit();
+	}
+}
+</script>
  <body>
 	<center>
 	<div id="wrap">
@@ -21,7 +38,8 @@
 				</div>
 				<div>
 
-<form enctype="multipart/form-data">
+<form enctype="multipart/form-data" method="post" action="deleteProcess.jsp" name="boardFrm">
+<input type="hidden" name="num" value="<%= num %>" />
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
@@ -34,49 +52,45 @@
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			홍길동
+			<%= dto.getName() %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">작성일</th>
 		<td>
-			2018-01-05
+			<%= dto.getPostdate() %>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			nakjasabal@naver.com
+			<%= dto.getEmail() %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">조회수</th>
 		<td>
-			100
+			<%= dto.getVisitcount() %>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">제목</th>
 		<td colspan="3">
-			제목영역입니다.
+			<%= dto.getTitle() %>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">내용</th>
 		<td colspan="3">
-			내용영역입니다<br/>
-			내용영역입니다<br/>
-			내용영역입니다<br/>
-			내용영역입니다<br/>
-			내용영역입니다<br/>
+			<%= dto.getContent() %>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td colspan="3">
-			파일명.jpg
+			<%= dto.getOfile() %>
 		</td>
 	</tr>
 </tbody>
@@ -85,9 +99,9 @@
 <div class="row text-center" style="">
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary">수정하기</button>
-	<button type="button" class="btn btn-success">삭제하기</button>	
+	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>	
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='ListSkin.jsp';">리스트보기</button>
+		onclick="location.href='./sub01.jsp';">리스트보기</button>
 </div>
 </form> 
 

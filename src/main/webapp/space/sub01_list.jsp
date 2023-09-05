@@ -1,7 +1,34 @@
+<%@page import="space.board.BoardDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="space.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
+<%
+BoardDAO dao = new BoardDAO();
+
+// 검색어가 있는 경우 클라이언트가 선택한 필드명과 검색어를 저장할 Map컬렉션을 생성한다.
+Map<String, Object> param = new HashMap<String, Object>();
+
+/* 검색하면 현재페이지로 폼값이 전송된다. */
+String keyField = request.getParameter("keyField");
+String keyString = request.getParameter("keyString");
+if (keyString != null) {
+	param.put("keyField", keyField);
+	param.put("keyString", keyString);
+}
+
+// Map컬렉션을 인수로 게시물의 갯수를 카운트 한다.
+int totalCount = dao.selectCount(param);
+
+List<BoardDTO> boardLists = dao.selectList(param);
+
+dao.close();
+
+%>
 
  <body>
 	<center>
@@ -27,9 +54,9 @@
 <form class="form-inline">	
 	<div class="form-group">
 		<select name="keyField" class="form-control">
-			<option value="">제목</option>
-			<option value="">작성자</option>
-			<option value="">내용</option>
+			<option value="title">제목</option>
+			<option value="name">작성자</option>
+			<option value="content">내용</option>
 		</select>
 	</div>
 	<div class="input-group">
@@ -67,14 +94,22 @@
 	
 	<tbody>
 	<!-- 리스트반복 -->
+<%
+int virtualNum = 0;
+for (BoardDTO dto : boardLists) {
+	virtualNum = totalCount--;
+%>
 	<tr>
-		<td class="text-center">번호</td>
-		<td class="text-left"><a href="sub01_view.jsp">제목</a></td>
-		<td class="text-center">작성자</td>
-		<td class="text-center">작성일</td>
-		<td class="text-center">조회수</td>
-		<td class="text-center">첨부</td>
+		<td class="text-center"><%= virtualNum %></td>
+		<td class="text-left"><a href="sub01_view.jsp?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a></td>
+		<td class="text-center"><%= dto.getName() %></td>
+		<td class="text-center"><%= dto.getPostdate() %></td>
+		<td class="text-center"><%= dto.getVisitcount() %></td>
+		<td class="text-center"><%= dto.getOfile()!=null ? "O" : "X" %></td>
 	</tr>
+<%
+}
+%>
 	</tbody>
 	</table>
 </div>

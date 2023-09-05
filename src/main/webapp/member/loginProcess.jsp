@@ -21,10 +21,13 @@ if (chkVal!=null && chkVal.equals("1")) {
 	CookieManager.deleteCookie(response, "SavedId");
 }
 
+// 로그인 상태로 간주한다.
 if (dto.getId() != null) {
 	session.setAttribute("UserId", dto.getId());
 	session.setAttribute("UserName", dto.getName());
+	session.setAttribute("UserEmail", dto.getEmail());
 	JSFunction.alertLocation("로그인에 성공하였습니다!", "../main/main.jsp", out);
+// 로그인 실패로 간주한다.
 } else {
 	request.setAttribute("LoginErrMsg", "로그인 오류입니다.");
 	JSFunction.alertBack("로그인에 실패하였습니다.", out);

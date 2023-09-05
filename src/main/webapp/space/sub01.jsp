@@ -34,3 +34,7 @@
 	</center>
  </body>
 </html>
+
+<%
+request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
+%>
