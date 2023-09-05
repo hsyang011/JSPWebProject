@@ -38,7 +38,7 @@ function deletePost() {
 				</div>
 				<div>
 
-<form enctype="multipart/form-data" method="post" action="deleteProcess.jsp" name="boardFrm">
+<form enctype="multipart/form-data" method="post" action="sub01_deleteProcess.jsp" name="boardFrm">
 <input type="hidden" name="num" value="<%= num %>" />
 <table class="table table-bordered">
 <colgroup>
@@ -98,8 +98,15 @@ function deletePost() {
 
 <div class="row text-center" style="">
 	<!-- 각종 버튼 부분 -->
-	<button type="button" class="btn btn-primary">수정하기</button>
-	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>	
+	<!-- 로그인이 된 상태에서 게시물 작성자와 로그인 정보가 일치하면 수정, 삭제하기 버튼이 보이게 처리한다. -->
+	<%
+	if (session.getAttribute("UserId")!=null && session.getAttribute("UserId").toString().equals(dto.getId())) {
+	%>
+	<button type="button" class="btn btn-primary" onclick="location.href='sub01_edit.jsp?num=<%= dto.getNum() %>'">수정하기</button>
+	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>
+	<%
+	}
+	%>
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='./sub01.jsp';">리스트보기</button>
 </div>

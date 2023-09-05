@@ -196,4 +196,27 @@ public class BoardDAO extends JDBConnect {
 		return result;
 	}
 	
+	// 게시물 수정하기
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		try {
+			// 특정 일련번호에 해당하는 게시물을 수정한다.
+			String query = " UPDATE space "
+					+ " SET title=?, content=?, ofile=?, sfile=? "
+					+ " WHERE num=? ";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getOfile());
+			psmt.setString(4, dto.getSfile());
+			psmt.setString(5, dto.getNum());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 수정 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 }

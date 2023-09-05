@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 String savedId = CookieManager.readCookie(request, "SavedId");
+String isChecked = savedId=="" ? "" : "checked";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -65,17 +66,7 @@ if(session.getAttribute("UserId") == null) {
 						</tr>
 					</table>
 					<p>
-					<%
-					if (savedId.equals("")) {
-					%>
-						<input type="checkbox" name="savedId" value="1" /><img src="../images/login_tit03.gif" alt="저장" />
-					<%
-					} else {
-					%>
-						<input type="checkbox" name="savedId" value="1" checked /><img src="../images/login_tit03.gif" alt="저장" />
-					<%
-					}
-					%>
+						<input type="checkbox" name="savedId" <%= isChecked %> value="1" /><img src="../images/login_tit03.gif" alt="저장" />
 						<a href="../member/id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>
 						<a href="../member/join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a>
 					</p>
@@ -86,7 +77,7 @@ if(session.getAttribute("UserId") == null) {
 					<!-- 로그인 후 -->
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
-						<a href=""><img src="../images/login_btn04.gif" /></a>
+						<a href="../member/edit.jsp"><img src="../images/login_btn04.gif" /></a>
 						<a href="../center/sub07.jsp"><img src="../images/login_btn05.gif" /></a>
 					</p>
 <%

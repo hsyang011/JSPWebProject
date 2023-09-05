@@ -29,6 +29,33 @@ public class MemberDAO extends JDBConnect {
 		
 		return result;
 	}
+	
+	// 회원정보 수정
+	public int memberEdit(MemberDTO dto) {
+		int result = 0;
+		String query = " UPDATE member "
+				+ " SET pass=?, tel=?, mobile=?, email=?, mailing=?, zipcode=?, addr1=?, addr2=? "
+				+ " WHERE name=? AND id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getPass());
+			psmt.setString(2, dto.getTel());
+			psmt.setString(3, dto.getMobile());
+			psmt.setString(4, dto.getEmail());
+			psmt.setString(5, dto.getMailing());
+			psmt.setString(6, dto.getZipcode());
+			psmt.setString(7, dto.getAddr1());
+			psmt.setString(8, dto.getAddr2());
+			psmt.setString(9, dto.getName());
+			psmt.setString(10, dto.getId());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("회원정보 수정 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 	// 로그인
 	public MemberDTO getMemberDTO(String uid, String upass) {
