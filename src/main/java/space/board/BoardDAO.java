@@ -40,26 +40,31 @@ public class BoardDAO extends JDBConnect {
 	
 	/* 작성된 게시물을 인출하여 반환한다. 특히 반환값은 여러개의 레코드를 반환할 수 있고,
 	순서를 보장해야 하므로 List컬렉션을 사용한다. */
-	public List<BoardDTO> selectList(Map<String, Object> map) {
+	public List<BoardDTO> selectListPage(Map<String, Object> map) {
 		/* List계열의 컬렉션을 생성한다. 이때 타입매개변수는 board테이블을 대상으로
 		하므로 BoardDTO로 설정한다. */
 		List<BoardDTO> bbs = new ArrayList<BoardDTO>();
 		
 		/* 레코드 인출을 위한 select쿼리문 작성. 최근 게시물이 상단에 출력되어야 하므로
 		일련번호의 내림차순으로 정렬한다. */
-		String query = " SELECT S.*, M.name, M.email "
-				+ " FROM member M INNER JOIN space S "
-				+ " ON M.id=S.id ";
+		String query = " SELECT * FROM ( "
+				+ " 		SELECT Tb.*, ROWNUM rNum FROM ( "
+				+ " 			SELECT S.*, M.name, M.email FROM member M INNER JOIN space S ON M.id=S.id ";
 		if (map.get("keyString") != null) {
 			query += " WHERE " + map.get("keyField") + " "
 					+ " LIKE '%" + map.get("keyString") + "%' ";
 		}
-		query += " ORDER BY num DESC ";
+		query += " ORDER BY num DESC "
+			+ "	 ) Tb "
+			+ " ) "
+			+ " WHERE rNum BETWEEN ? AND ? ";
 		
 		try {
 			// 쿼리 실행 및 결과셋 반환
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(query);
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, map.get("start").toString());
+			psmt.setString(2, map.get("end").toString());
+			rs = psmt.executeQuery();
 			// 2개 이상의 레코드가 반환될 수 있으므로 while문을 사용한다.
 			while (rs.next()) {
 				// 하나의 레코드를 저장할 수 있는 DTO객체를 생성한다.

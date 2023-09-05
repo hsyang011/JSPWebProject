@@ -1,3 +1,4 @@
+<%@page import="utils.BoardPage"%>
 <%@page import="space.board.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
@@ -24,7 +25,25 @@ if (keyString != null) {
 // Map컬렉션을 인수로 게시물의 갯수를 카운트 한다.
 int totalCount = dao.selectCount(param);
 
-List<BoardDTO> boardLists = dao.selectList(param);
+/*** 페이지 처리 start ***/
+int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
+int totalPage = (int)Math.ceil((double)totalCount / pageSize);
+
+int pageNum = 1;
+String pageTemp = request.getParameter("pageNum");
+if (pageTemp!=null && !pageTemp.equals("")) {
+	pageNum = Integer.parseInt(pageTemp);
+}
+
+int start = (pageNum - 1)*pageSize + 1;
+int end = pageNum*pageSize;
+param.put("start", start);
+param.put("end", end);
+/*** 페이지 처리 end ***/
+
+
+List<BoardDTO> boardLists = dao.selectListPage(param);
 
 dao.close();
 
@@ -95,9 +114,11 @@ dao.close();
 	<tbody>
 	<!-- 리스트반복 -->
 <%
+// 게시물이 있을 때
 int virtualNum = 0;
+int countNum = 0;
 for (BoardDTO dto : boardLists) {
-	virtualNum = totalCount--;
+	virtualNum = totalCount - (((pageNum - 1)*pageSize) + countNum++);
 %>
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
@@ -117,8 +138,8 @@ for (BoardDTO dto : boardLists) {
 	<!-- 각종 버튼 부분 -->
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
-	<button type="button" class="btn btn-default" 
-		onclick="location.href='sub01_write.jsp';">글쓰기</button>
+	<button type="button" class="btn btn-default"
+		onclick="location.href='sub01_write.jsp';" style="margin-left: 18px">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>
@@ -128,13 +149,9 @@ for (BoardDTO dto : boardLists) {
 </div>
 <div class="row text-center">
 	<!-- 페이지번호 부분 -->
-	<ul class="pagination">
+	<ul class="pagination justify-content-center">
 		<li><span class="glyphicon glyphicon-fast-backward"></span></li>
-		<li><a href="#">1</a></li>		
-		<li class="active"><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>		
-		<li><a href="#">5</a></li>
+		<li><%= BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %></li>
 		<li><span class="glyphicon glyphicon-fast-forward"></span></li>
 	</ul>	
 </div>
