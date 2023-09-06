@@ -101,15 +101,10 @@ function deletePost() {
 <div class="row text-center" style="">
 	<!-- 각종 버튼 부분 -->
 	<!-- 로그인이 된 상태에서 게시물 작성자와 로그인 정보가 일치하면 수정, 삭제하기 버튼이 보이게 처리한다. -->
-	<%
-	BoardDTO dto = (BoardDTO)request.getAttribute("dto");
-	if (session.getAttribute("UserId")!=null && session.getAttribute("UserId").toString().equals(dto.getId())) {
-	%>
-	<button type="button" class="btn btn-primary" onclick="location.href='../board/edit.do?num=<%= dto.getNum() %>'">수정하기</button>
+	<c:if test="${ not empty UserId and UserId eq dto.id }">
+	<button type="button" class="btn btn-primary" onclick="location.href='../board/edit.do?num=${ dto.num }'">수정하기</button>
 	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>
-	<%
-	}
-	%>
+	</c:if>
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='../board/list.do';">리스트보기</button>
 </div>

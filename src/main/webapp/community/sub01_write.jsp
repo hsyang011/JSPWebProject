@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../include/global_head.jsp" %>
 <%@ include file="../include/isLoggedIn.jsp" %>
-<%
-String name = session.getAttribute("UserName").toString();
-String email = session.getAttribute("UserEmail").toString();
-%>
 <script type="text/javascript">
 function formValidate(frm) {
 	if (frm.pass.value == "") {
@@ -55,7 +52,7 @@ function formValidate(frm) {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			<input type="text" class="form-control"  name="name" value="<%= name %>"
+			<input type="text" class="form-control"  name="name" value="${ UserName }"
 				style="width:100px;" readonly />
 		</td>
 	</tr>
@@ -63,7 +60,7 @@ function formValidate(frm) {
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			<input type="text" class="form-control" name="email" value="<%= email %>"
+			<input type="text" class="form-control" name="email" value="${ UserEmail }"
 				style="width:400px;" readonly />
 		</td>
 	</tr>
