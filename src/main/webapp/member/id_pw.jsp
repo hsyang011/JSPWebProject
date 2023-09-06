@@ -66,7 +66,7 @@ function findPwForm(frm) {
 							<li><input type="text" name="user_name" value="" class="login_input01" /></li>
 							<li><input type="text" name="user_email" value="" class="login_input01" /></li>
 						</ul>
-						<input type="image" src="../images/member/id_btn01.gif" class="id_btn" />
+						<input type="image" src="../images/member/id_btn01.gif" class="id_btn" style="left: 276px" />
 						<a href="./join01.jsp"><img src="../images/login_btn03.gif" class="id_btn02" /></a>
 					</form>
 					</div>
@@ -78,7 +78,7 @@ function findPwForm(frm) {
 							<li><input type="text" name="user_name" value="" class="login_input01" /></li>
 							<li><input type="text" name="user_email" value="" class="login_input01" /></li>
 						</ul>
-						<input type="image" src="../images/member/id_btn01.gif" class="pw_btn" />
+						<input type="image" src="../images/member/id_btn01.gif" class="pw_btn" style="left: 276px" />
 					</form>
 					</div>
 				</div>

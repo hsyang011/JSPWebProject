@@ -1,5 +1,5 @@
-<%@page import="space.board.BoardDTO"%>
-<%@page import="space.board.BoardDAO"%>
+<%@page import="board.BoardDTO"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

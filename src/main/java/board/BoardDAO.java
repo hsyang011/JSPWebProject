@@ -1,4 +1,4 @@
-package space.board;
+package board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +156,7 @@ public class BoardDAO extends JDBConnect {
 	}
 	
 	// 게시물 입력을 위한 메소드. 폼값이 저장된 DTO객체를 인수로 받는다.
-	public int insertWrite(BoardDTO dto, String tname) {
+	public int insertWrite(BoardDTO dto, String tname, String sequence) {
 		int result = 0;
 		
 		try {
@@ -165,7 +165,7 @@ public class BoardDAO extends JDBConnect {
 			String query = " INSERT INTO " + tname + " ( "
 					+ " num, id, title, content, postdate, visitcount, ofile, sfile) "
 					+ " VALUES ( "
-					+ " seq_space_num.NEXTVAL, ?, ?, ?, sysdate, 0, ?, ?) ";
+					+ sequence +".NEXTVAL, ?, ?, ?, sysdate, 0, ?, ?) ";
 			
 			psmt = con.prepareStatement(query);
 			// 인파라미터는 DTO에 저장된 내용으로 채워준다.

@@ -1,7 +1,7 @@
 <%@page import="membership.MemberDAO"%>
 <%@page import="fileupload.FileUtil"%>
-<%@page import="space.board.BoardDAO"%>
-<%@page import="space.board.BoardDTO"%>
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/isLoggedIn.jsp" %>
@@ -11,6 +11,7 @@
 String id = session.getAttribute("UserId").toString();
 // 세션영역에서 테이블명 가져오기
 String tname = session.getAttribute("tname").toString();
+String sequence = session.getAttribute("seqname").toString();
 // 파라미터에서 각 속성값 가져오기
 String pass = request.getParameter("pass");
 String title = request.getParameter("title");
@@ -49,7 +50,7 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 
 
 	BoardDAO dao = new BoardDAO();
-	int result = dao.insertWrite(dto, tname);
+	int result = dao.insertWrite(dto, tname, sequence);
 	dao.close();
 	
 	

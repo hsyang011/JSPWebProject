@@ -35,7 +35,7 @@
 						}
 					}
 				</script>
-				<div class="login_box01">
+				<div class="login_box01" style="height: 230px;">
 					<!-- 로그인 버튼, 폼으로 전송 -->
 					<form action="loginProcess.jsp" method="post" name="loginFrm" onsubmit="return formValidate(this);">
 					<img src="../images/login_tit.gif" style="margin-bottom:30px;" />

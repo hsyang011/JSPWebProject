@@ -4,9 +4,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
-<!-- view페이지 포함하기 -->
-<%@ include file="./common_view.jsp" %>
-
 <script type="text/javascript">
 function deletePost() {
 	var comfirmed = confirm("정말로 삭제하겠습니까?");
@@ -33,8 +30,8 @@ function deletePost() {
 				</div>
 				<div>
 
-<form enctype="multipart/form-data" method="post" action="common_deleteProcess.jsp" name="boardFrm">
-<input type="hidden" name="num" value="<%= num %>" />
+<form enctype="multipart/form-data" method="post" action="../board/delete.do" name="boardFrm">
+<input type="hidden" name="num" value="${ dto.num }" />
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
@@ -47,45 +44,45 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			<%= dto.getName() %>
+			${ dto.name }
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">작성일</th>
 		<td>
-			<%= dto.getPostdate() %>
+			${ dto.postdate }
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			<%= dto.getEmail() %>
+			${ dto.email }
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">조회수</th>
 		<td>
-			<%= dto.getVisitcount() %>
+			${ dto.visitcount }
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">제목</th>
 		<td colspan="3">
-			<%= dto.getTitle() %>
+			${ dto.title }
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">내용</th>
 		<td colspan="3">
-			<%= dto.getContent() %>
+			${ dto.content }
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td colspan="3">
-			<%= dto.getOfile() %>
+			${ dto.ofile }
 		</td>
 	</tr>
 </tbody>
@@ -95,6 +92,7 @@ function deletePost() {
 	<!-- 각종 버튼 부분 -->
 	<!-- 로그인이 된 상태에서 게시물 작성자와 로그인 정보가 일치하면 수정, 삭제하기 버튼이 보이게 처리한다. -->
 	<%
+	BoardDTO dto = (BoardDTO)request.getAttribute("dto");
 	if (session.getAttribute("UserId")!=null && session.getAttribute("UserId").toString().equals(dto.getId())) {
 	%>
 	<button type="button" class="btn btn-primary" onclick="location.href='sub01_edit.jsp?num=<%= dto.getNum() %>'">수정하기</button>
@@ -103,7 +101,7 @@ function deletePost() {
 	}
 	%>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='./sub01.jsp';">리스트보기</button>
+		onclick="location.href='../board/list.do';">리스트보기</button>
 </div>
 </form> 
 

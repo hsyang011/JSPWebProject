@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
+<%
+request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
+%>
  <body>
 	<center>
 	<div id="wrap">
@@ -33,7 +35,3 @@
 	</center>
  </body>
 </html>
-
-<%
-request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
-%>

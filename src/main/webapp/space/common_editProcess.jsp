@@ -1,7 +1,7 @@
 <%@page import="membership.MemberDAO"%>
 <%@page import="fileupload.FileUtil"%>
-<%@page import="space.board.BoardDAO"%>
-<%@page import="space.board.BoardDTO"%>
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/isLoggedIn.jsp" %>

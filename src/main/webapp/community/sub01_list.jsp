@@ -10,8 +10,8 @@
 
 <%
 // 세션영역에 tname속성으로 테이블명 저장
-session.setAttribute("tname", "notice_board");
-session.setAttribute("seqname", "seq_notice_num");
+session.setAttribute("tname", "staff_board");
+session.setAttribute("seqname", "seq_staff_num");
 %>
 <!-- common_list.jsp 파일 포함하기 -->
 <%@ include file="./common_list.jsp" %>
@@ -29,8 +29,8 @@ session.setAttribute("seqname", "seq_notice_num");
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub01_title.gif" alt="공지사항" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;공지사항<p>
+					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
 				</div>
 				<div>
 
@@ -89,7 +89,7 @@ for (BoardDTO dto : boardLists) {
 %>
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="sub01_view.jsp?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a></td>
+		<td class="text-left"><a href="../board/view.do?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a></td>
 		<td class="text-center"><%= dto.getName() %></td>
 		<td class="text-center"><%= dto.getPostdate() %></td>
 		<td class="text-center"><%= dto.getVisitcount() %></td>

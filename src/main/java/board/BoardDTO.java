@@ -1,4 +1,4 @@
-package space.board;
+package board;
 
 public class BoardDTO {
 
