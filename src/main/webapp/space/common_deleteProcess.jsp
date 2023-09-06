@@ -8,11 +8,12 @@
 <%
 // 일련번호를 폼값으로 받는다.
 String num = request.getParameter("num");
+String tname = session.getAttribute("tname").toString();
 
 BoardDTO dto = new BoardDTO();
 BoardDAO dao = new BoardDAO();
 // 본인 확인을 위해 기존게시물을 인출한다.
-dto = dao.selectView(num);
+dto = dao.selectView(num, tname);
 
 /* session영역에 저장된 회원정보를 얻어온 후 String타입으로 변환한다. session을 포함한
 4가지 영역에 값을 저장할 때는 모두 Object타입으로 자동형변환되므로 사용을 위해서는 기존의 타입으로
@@ -25,7 +26,7 @@ int delResult = 0;
 if (sessionId.equals(dto.getId())) {
 	// 게시물을 삭제한다.
 	dto.setNum(num);
-	delResult = dao.deletePost(dto);
+	delResult = dao.deletePost(dto, tname);
 	dao.close();
 	
 	if (delResult == 1) {

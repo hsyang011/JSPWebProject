@@ -9,45 +9,11 @@
 <%@ include file="../include/global_head.jsp" %>
 
 <%
-BoardDAO dao = new BoardDAO();
-
-// 검색어가 있는 경우 클라이언트가 선택한 필드명과 검색어를 저장할 Map컬렉션을 생성한다.
-Map<String, Object> param = new HashMap<String, Object>();
-
-/* 검색하면 현재페이지로 폼값이 전송된다. */
-String keyField = request.getParameter("keyField");
-String keyString = request.getParameter("keyString");
-if (keyString != null) {
-	param.put("keyField", keyField);
-	param.put("keyString", keyString);
-}
-
-// Map컬렉션을 인수로 게시물의 갯수를 카운트 한다.
-int totalCount = dao.selectCount(param);
-
-/*** 페이지 처리 start ***/
-int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-int totalPage = (int)Math.ceil((double)totalCount / pageSize);
-
-int pageNum = 1;
-String pageTemp = request.getParameter("pageNum");
-if (pageTemp!=null && !pageTemp.equals("")) {
-	pageNum = Integer.parseInt(pageTemp);
-}
-
-int start = (pageNum - 1)*pageSize + 1;
-int end = pageNum*pageSize;
-param.put("start", start);
-param.put("end", end);
-/*** 페이지 처리 end ***/
-
-
-List<BoardDTO> boardLists = dao.selectListPage(param);
-
-dao.close();
-
+// 세션영역에 tname속성으로 테이블명 저장
+session.setAttribute("tname", "space");
 %>
+<!-- common_list.jsp 파일 포함하기 -->
+<%@ include file="./common_list.jsp" %>
 
  <body>
 	<center>
@@ -139,7 +105,7 @@ for (BoardDTO dto : boardLists) {
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
 	<button type="button" class="btn btn-default"
-		onclick="location.href='sub01_write.jsp';" style="margin-left: 18px">글쓰기</button>
+		onclick="location.href='common_write.jsp';" style="margin-left: 18px">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

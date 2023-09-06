@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
-
  <body>
 	<center>
 	<div id="wrap">

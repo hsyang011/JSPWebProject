@@ -14,7 +14,7 @@ public class BoardDAO extends JDBConnect {
 		int totalCount = 0;
 		
 		// 게시물 수를 얻어오기 위한 쿼리문 작성
-		String query = " SELECT COUNT(*) FROM space ";
+		String query = " SELECT COUNT(*) FROM " + map.get("tname").toString() + " ";
 		/* 검색어가 있는 경우 where절을 추가하여 조건에 맞는 게시물만 select한다. */
 		if (map.get("keyString") != null) {
 			query += " WHERE " + map.get("keyField") + " "
@@ -49,7 +49,7 @@ public class BoardDAO extends JDBConnect {
 		일련번호의 내림차순으로 정렬한다. */
 		String query = " SELECT * FROM ( "
 				+ " 		SELECT Tb.*, ROWNUM rNum FROM ( "
-				+ " 			SELECT S.*, M.name, M.email FROM member M INNER JOIN space S ON M.id=S.id ";
+				+ " 			SELECT S.*, M.name, M.email FROM member M INNER JOIN " + map.get("tname").toString() + " S ON M.id=S.id ";
 		if (map.get("keyString") != null) {
 			query += " WHERE " + map.get("keyField") + " "
 					+ " LIKE '%" + map.get("keyString") + "%' ";
@@ -95,10 +95,10 @@ public class BoardDAO extends JDBConnect {
 	}
 	
 	// 게시물의 조회수를 1 증가시킨다.
-	public void updateVisitCount(String num) {
+	public void updateVisitCount(String num, String tname) {
 		/* 게시물의 일련번호를 통해 visitcount를 1 증가시킨다. 해당 컬럼은
 		number타입이므로 사칙연산이 가능하다. */
-		String query = " UPDATE space SET "
+		String query = " UPDATE " + tname + " SET "
 				+ " visitcount=visitcount+1 "
 				+ " WHERE num=? ";
 		
@@ -113,13 +113,13 @@ public class BoardDAO extends JDBConnect {
 	}
 	
 	// 인수로 전달된 게시물의 일련번호로 하나의 게시물을 인출한다.
-	public BoardDTO selectView(String num) {
+	public BoardDTO selectView(String num, String tname) {
 		// 하나의 레코드를 저장하기 위한 DTO객체 생성
 		BoardDTO dto = new BoardDTO();
 		
 		/* 내부조인(inner join)을 통해 member테이블의 name, email컬럼까지 select한다. */
 		String query = " SELECT S.*, M.name, M.email "
-				+ " FROM member M INNER JOIN space S "
+				+ " FROM member M INNER JOIN " + tname + " S "
 				+ " ON M.id=S.id "
 				+ " WHERE num=? ";
 		
@@ -156,13 +156,13 @@ public class BoardDAO extends JDBConnect {
 	}
 	
 	// 게시물 입력을 위한 메소드. 폼값이 저장된 DTO객체를 인수로 받는다.
-	public int insertWrite(BoardDTO dto) {
+	public int insertWrite(BoardDTO dto, String tname) {
 		int result = 0;
 		
 		try {
 			/* 인파라미터가 있는 동적쿼리문으로 insert문을 작성한다. 게시물의 일련번호는
 			시퀀스를 통해 자동부여하고, 조회수는 0으로 입력한다. */
-			String query = " INSERT INTO space ( "
+			String query = " INSERT INTO " + tname + " ( "
 					+ " num, id, title, content, postdate, visitcount, ofile, sfile) "
 					+ " VALUES ( "
 					+ " seq_space_num.NEXTVAL, ?, ?, ?, sysdate, 0, ?, ?) ";
@@ -184,12 +184,12 @@ public class BoardDAO extends JDBConnect {
 		return result;
 	}
 	
-	public int deletePost(BoardDTO dto) {
+	public int deletePost(BoardDTO dto, String tname) {
 		int result = 0;
 		
 		try {
 			// 인파라미터가 있는 delete쿼리문 작성
-			String query = " DELETE FROM space WHERE num=? ";
+			String query = " DELETE FROM " + tname + " WHERE num=? ";
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getNum());
 			result = psmt.executeUpdate();
@@ -202,11 +202,11 @@ public class BoardDAO extends JDBConnect {
 	}
 	
 	// 게시물 수정하기
-	public int updateEdit(BoardDTO dto) {
+	public int updateEdit(BoardDTO dto, String tname) {
 		int result = 0;
 		try {
 			// 특정 일련번호에 해당하는 게시물을 수정한다.
-			String query = " UPDATE space "
+			String query = " UPDATE " + tname + " "
 					+ " SET title=?, content=?, ofile=?, sfile=? "
 					+ " WHERE num=? ";
 			psmt = con.prepareStatement(query);

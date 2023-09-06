@@ -9,6 +9,7 @@
 
 // 세션영역에서 id값 가져오기
 String id = session.getAttribute("UserId").toString();
+String tname = session.getAttribute("tname").toString();
 // 파라미터에서 각 속성값 가져오기
 String num = request.getParameter("num");
 String prevOfile = request.getParameter("prevOfile");
@@ -53,9 +54,9 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {// 1. 파일 업로
 		dto.setSfile(prevSfile);
 	}
 	
-	BoardDAO bDao = new BoardDAO();
-	int affected = bDao.updateEdit(dto);
-	bDao.close();
+	BoardDAO dao = new BoardDAO();
+	int affected = dao.updateEdit(dto, tname);
+	dao.close();
 	
 	if (affected == 1) {
 		JSFunction.alertLocation("수정하기에 성공하였습니다!", "./sub01_view.jsp?num="+dto.getNum(), out);

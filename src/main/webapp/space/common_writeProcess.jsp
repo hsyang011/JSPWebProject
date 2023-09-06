@@ -9,6 +9,8 @@
 
 // 세션영역에서 id값 가져오기
 String id = session.getAttribute("UserId").toString();
+// 세션영역에서 테이블명 가져오기
+String tname = session.getAttribute("tname").toString();
 // 파라미터에서 각 속성값 가져오기
 String pass = request.getParameter("pass");
 String title = request.getParameter("title");
@@ -47,7 +49,7 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 
 
 	BoardDAO dao = new BoardDAO();
-	int result = dao.insertWrite(dto);
+	int result = dao.insertWrite(dto, tname);
 	dao.close();
 	
 	

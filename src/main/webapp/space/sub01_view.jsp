@@ -4,14 +4,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
-<%
-String num = request.getParameter("num");
-BoardDAO dao = new BoardDAO();
-dao.updateVisitCount(num);
+<!-- view페이지 포함하기 -->
+<%@ include file="./common_view.jsp" %>
 
-BoardDTO dto = dao.selectView(num);
-dao.close();
-%>
 <script type="text/javascript">
 function deletePost() {
 	var comfirmed = confirm("정말로 삭제하겠습니까?");
@@ -38,7 +33,7 @@ function deletePost() {
 				</div>
 				<div>
 
-<form enctype="multipart/form-data" method="post" action="sub01_deleteProcess.jsp" name="boardFrm">
+<form enctype="multipart/form-data" method="post" action="common_deleteProcess.jsp" name="boardFrm">
 <input type="hidden" name="num" value="<%= num %>" />
 <table class="table table-bordered">
 <colgroup>

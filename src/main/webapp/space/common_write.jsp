@@ -43,7 +43,7 @@ function formValidate(frm) {
 				</div>
 				<div>
 
-<form name="writeFrm" method="post" action="sub01_writeProcess.jsp" onsubmit="return formValidate(this);" enctype="multipart/form-data">
+<form name="writeFrm" method="post" action="common_writeProcess.jsp" onsubmit="return formValidate(this);" enctype="multipart/form-data">
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
