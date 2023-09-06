@@ -106,7 +106,7 @@ for (BoardDTO dto : boardLists) {
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
 	<button type="button" class="btn btn-default"
-		onclick="location.href='common_write.jsp';" style="margin-left: 18px">글쓰기</button>
+		onclick="location.href='../board/write.do';" style="margin-left: 18px">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

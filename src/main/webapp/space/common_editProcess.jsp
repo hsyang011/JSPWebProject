@@ -27,7 +27,8 @@ dto.setContent(content);
 
 
 
-if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {// 1. 파일 업로드 처리
+if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
+	// 1. 파일 업로드 처리
 	// 업로드 디렉토리의 물리적 경로 확인
 	String saveDirectory = application.getRealPath("/uploads/");
 	// 파일 업로드

@@ -4,12 +4,25 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../include/global_head.jsp" %>
+<%@ include file="../include/isLoggedIn.jsp" %>
 
 <script type="text/javascript">
-function deletePost() {
-	var comfirmed = confirm("정말로 삭제하겠습니까?");
-	if (comfirmed){
-		document.boardFrm.submit();
+// 폼 내용 검증
+function formValidate(frm) {
+	if (frm.pass.value == "") {
+		alert("비밀번호를 입력하세요.");
+		frm.pass.focus();
+		return false;
+	}
+	if (frm.title.value == "") {
+		alert("제목을 입력하세요.");
+		frm.title.focus();
+		return false;
+	}
+	if (frm.content.value == "") {
+		alert("내용을 입력하세요.");
+		frm.content.focus();
+		return false;
 	}
 }
 </script>
@@ -31,12 +44,12 @@ function deletePost() {
 				</div>
 				<div>
 
-<form enctype="multipart/form-data" method="post" action="../board/delete.do" name="boardFrm">
+<form name="writeFrm" method="post" action="../board/edit.do" onsubmit="return formValidate(this);" enctype="multipart/form-data">
 <input type="hidden" name="num" value="${ dto.num }" />
+<input type="hidden" name="prevOfile" value="${ dto.ofile }" />
+<input type="hidden" name="prevSfile" value="${ dto.sfile }" />
 <table class="table table-bordered">
 <colgroup>
-	<col width="20%"/>
-	<col width="30%"/>
 	<col width="20%"/>
 	<col width="*"/>
 </colgroup>
@@ -45,53 +58,45 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			${ dto.name }
-		</td>
-		<th class="text-center" 
-			style="vertical-align:middle;">작성일</th>
-		<td>
-			${ dto.postdate }
+			<input type="text" class="form-control"  name="name" value="${ dto.name }"
+				style="width:100px;" readonly />
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			${ dto.email }
+			<input type="text" class="form-control" name="email" value="${ dto.email }"
+				style="width:400px;" readonly />
 		</td>
+	</tr>
+	<tr>
 		<th class="text-center" 
-			style="vertical-align:middle;">조회수</th>
+			style="vertical-align:middle;">패스워드</th>
 		<td>
-			${ dto.visitcount }
+			<input type="text" class="form-control" name="pass" 
+				style="width:200px;" />
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">제목</th>
-		<td colspan="3">
-			${ dto.title }
+		<td>
+			<input type="text" class="form-control" name="title" value="${ dto.title }" />
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">내용</th>
-		<td colspan="3">
-			${ dto.content }
-			<c:if test="${ not empty dto.ofile and isImage eq true }">
-				<br /><img src="../uploads/${ dto.sfile }" style="max-width: 100%" alt="이미지" />
-			</c:if>
+		<td>
+			<textarea rows="10" class="form-control" name="content">${ dto.content }</textarea>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
-		<td colspan="3">
-			<c:if test="${ not empty dto.ofile }">
-			${ dto.ofile }
-			<a href="../board/download.do?ofile=${ dto.ofile }&sfile=${ dto.sfile }&num=${ dto.num }">
-				[다운로드]
-			</a>
-			</c:if>
+		<td>
+			<input type="file" class="form-control" name="ofile" />
 		</td>
 	</tr>
 </tbody>
@@ -99,18 +104,11 @@ function deletePost() {
 
 <div class="row text-center" style="">
 	<!-- 각종 버튼 부분 -->
-	<!-- 로그인이 된 상태에서 게시물 작성자와 로그인 정보가 일치하면 수정, 삭제하기 버튼이 보이게 처리한다. -->
-	<%
-	BoardDTO dto = (BoardDTO)request.getAttribute("dto");
-	if (session.getAttribute("UserId")!=null && session.getAttribute("UserId").toString().equals(dto.getId())) {
-	%>
-	<button type="button" class="btn btn-primary" onclick="location.href='../board/edit.do?num=<%= dto.getNum() %>'">수정하기</button>
-	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>
-	<%
-	}
-	%>
+	
+	<button type="submit" class="btn btn-danger">전송하기</button>
+	<button type="reset" class="btn">Reset</button>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='../board/list.do';">리스트보기</button>
+		onclick="location.href='./sub01.jsp';">리스트보기</button>
 </div>
 </form> 
 
