@@ -21,6 +21,8 @@ public class ListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		///////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////
 		BoardDAO dao = new BoardDAO();
 		
 		// 검색어가 있는 경우 클라이언트가 선택한 필드명과 검색어를 저장할 Map컬렉션을 생성한다.
@@ -71,7 +73,7 @@ public class ListController extends HttpServlet {
 		
 		
 		// 뷰에 전달할 매개변수 추가
-		String pagingImg = BoardPage.pagingImg(totalCount, pageSize, blockPage, pageNum, "../mvcboard/list.do");
+		String pagingImg = BoardPage.pagingImg(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 		// 페이지 번호
 		map.put("pagingImg", pagingImg);
 		// 전체게시물의 갯수

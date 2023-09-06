@@ -1,41 +1,30 @@
-<%@page import="utils.BoardPage"%>
 <%@page import="board.BoardDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
-<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../include/global_head.jsp" %>
-
-<%
-// 세션영역에 tname속성으로 테이블명 저장
-session.setAttribute("tname", "staff_board");
-session.setAttribute("seqname", "seq_staff_num");
-%>
-<!-- common_list.jsp 파일 포함하기 -->
-<%@ include file="./common_list.jsp" %>
-
+<%-- <%
+request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
+%> --%>
  <body>
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
 
-		<img src="../images/space/sub_image.jpg" id="main_visual" />
+		<img src="../images/community/sub_image.jpg" id="main_visual" />
 
 		<div class="contents_box">
 			<div class="left_contents">
-				<%@ include file = "../include/space_leftmenu.jsp" %>
+				
+				<%@ include file = "../include/community_leftmenu.jsp" %>
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
 					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
 				</div>
-				<div>
-
-<div class="row text-right" style="margin-bottom:20px;
-		padding-right:50px;">
+			</div>
+			<div class="row text-right" style="margin-bottom:20px; padding-right:50px;">
 <!-- 검색부분 -->
 <form class="form-inline">	
 	<div class="form-group">
@@ -80,24 +69,23 @@ session.setAttribute("seqname", "seq_staff_num");
 	
 	<tbody>
 	<!-- 리스트반복 -->
-<%
-// 게시물이 있을 때
-int virtualNum = 0;
-int countNum = 0;
-for (BoardDTO dto : boardLists) {
-	virtualNum = totalCount - (((pageNum - 1)*pageSize) + countNum++);
-%>
+	<c:forEach items="${ boardLists }" var="row" varStatus="loop">
 	<tr>
-		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="../board/view.do?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a></td>
-		<td class="text-center"><%= dto.getName() %></td>
-		<td class="text-center"><%= dto.getPostdate() %></td>
-		<td class="text-center"><%= dto.getVisitcount() %></td>
-		<td class="text-center"><%= dto.getOfile()!=null ? "O" : "X" %></td>
+		<td class="text-center">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</td>
+		<td class="text-left"><a href="../board/view.do?num=${ row.num }">${ row.title }</a></td>
+		<td class="text-center">${ row.name }</td>
+		<td class="text-center">${ row.postdate }</td>
+		<td class="text-center">${ row.visitcount }</td>
+		<td class="text-center">
+		<c:if test="${ not empty row.ofile }">
+			O
+		</c:if>
+		<c:if test="${ empty row.ofile }">
+			X
+		</c:if>
+		</td>
 	</tr>
-<%
-}
-%>
+	</c:forEach>
 	</tbody>
 	</table>
 </div>
@@ -118,7 +106,7 @@ for (BoardDTO dto : boardLists) {
 	<!-- 페이지번호 부분 -->
 	<ul class="pagination justify-content-center">
 		<li><span class="glyphicon glyphicon-fast-backward"></span></li>
-		<li><%= BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %></li>
+		<li>${ map.pagingImg }</li>
 		<li><span class="glyphicon glyphicon-fast-forward"></span></li>
 	</ul>	
 </div>
@@ -128,7 +116,7 @@ for (BoardDTO dto : boardLists) {
 		</div>
 		<%@ include file="../include/quick.jsp" %>
 	</div>
-
+	
 
 	<%@ include file="../include/footer.jsp" %>
 	</center>

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import membership.MemberDAO;
 import utils.JSFunction;
 
 @WebServlet("/board/write.do")
@@ -43,39 +44,43 @@ public class WriteController extends HttpServlet {
 		dto.setTitle(title);
 		dto.setContent(content);
 		
-		
-		// 1. 파일 업로드 처리
-		// 업로드 디렉토리의 물리적 경로 확인
-		String saveDirectory = req.getServletContext().getRealPath("/uploads/");
-		// 파일 업로드
-		String originalFileName = "";
-		try {
-			// 업로드가 정상적으로 완료되면 원본파일명을 반환한다.
-			originalFileName = FileUtil.uploadFile(req, saveDirectory);
-		} catch (Exception e) {
-			/* 파일 업로드시 오류가 발생되면 경고창을 띄운 후 작성페이지로 이동한다. */
-			JSFunction.alertBack(resp, "파일 업로드 오류입니다.");
-			e.printStackTrace();
-			return;
-		}
-		
-		// 첨부파일이 정상적으로 등록되어 원본파일명이 반환되었다면
-		if (originalFileName != "") {
-			String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
-			dto.setOfile(originalFileName);
-			dto.setSfile(saveFileName);
-		}
 
-		// 2. 파일 업로드 외 처리 ====================================
-		BoardDAO dao = new BoardDAO();
-		int result = dao.insertWrite(dto, tname, sequence);
-		dao.close();
-		
-		
-		if (result == 1) {
-			JSFunction.alertLocation(resp, "글쓰기에 성공하였습니다!", "../board/list.do");
+		if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
+			// 1. 파일 업로드 처리
+			// 업로드 디렉토리의 물리적 경로 확인
+			String saveDirectory = req.getServletContext().getRealPath("/uploads/");
+			// 파일 업로드
+			String originalFileName = "";
+			try {
+				// 업로드가 정상적으로 완료되면 원본파일명을 반환한다.
+				originalFileName = FileUtil.uploadFile(req, saveDirectory);
+			} catch (Exception e) {
+				/* 파일 업로드시 오류가 발생되면 경고창을 띄운 후 작성페이지로 이동한다. */
+				JSFunction.alertBack(resp, "파일 업로드 오류입니다.");
+				e.printStackTrace();
+				return;
+			}
+			
+			// 첨부파일이 정상적으로 등록되어 원본파일명이 반환되었다면
+			if (originalFileName != "") {
+				String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
+				dto.setOfile(originalFileName);
+				dto.setSfile(saveFileName);
+			}
+	
+			// 2. 파일 업로드 외 처리 ====================================
+			BoardDAO dao = new BoardDAO();
+			int result = dao.insertWrite(dto, tname, sequence);
+			dao.close();
+			
+			
+			if (result == 1) {
+				JSFunction.alertLocation(resp, "글쓰기에 성공하였습니다!", "../board/list.do");
+			} else {
+				JSFunction.alertBack(resp, "글쓰기에 실패하였습니다.");
+			}
 		} else {
-			JSFunction.alertBack(resp, "글쓰기에 실패하였습니다.");
+			JSFunction.alertBack(resp, "비밀번호가 틀렸습니다.");
 		}
 	}
 

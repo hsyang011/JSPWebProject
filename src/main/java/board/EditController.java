@@ -59,6 +59,7 @@ public class EditController extends HttpServlet {
 
 
 
+		// 비밀번호가 일치하는지 확인
 		if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 			// 1. 파일 업로드 처리
 			// 업로드 디렉토리의 물리적 경로 확인

@@ -26,23 +26,23 @@ function formValidate(frm) {
 	}
 }
 </script>
- <body>
+ <body>		
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
 
-		<img src="../images/space/sub_image.jpg" id="main_visual" />
+		<img src="../images/community/sub_image.jpg" id="main_visual" />
 
 		<div class="contents_box">
 			<div class="left_contents">
-				<%@ include file = "../include/space_leftmenu.jsp" %>
+				<%@ include file = "../include/community_leftmenu.jsp" %>
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub01_title.gif" alt="공지사항" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;공지사항<p>
+					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
 				</div>
-				<div>
+			<div>
 
 <form name="writeFrm" method="post" action="../board/edit.do" onsubmit="return formValidate(this);" enctype="multipart/form-data">
 <input type="hidden" name="num" value="${ dto.num }" />
@@ -108,7 +108,7 @@ function formValidate(frm) {
 	<button type="submit" class="btn btn-danger">전송하기</button>
 	<button type="reset" class="btn">Reset</button>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='./sub01.jsp';">리스트보기</button>
+		onclick="location.href='../board/list.do';">리스트보기</button>
 </div>
 </form> 
 
