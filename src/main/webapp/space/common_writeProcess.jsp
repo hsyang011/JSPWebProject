@@ -55,7 +55,18 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 	
 	
 	if (result == 1) {
-		JSFunction.alertLocation("글쓰기에 성공하였습니다!", "./sub01.jsp", out);
+		String url = "./sub01.jsp";
+		switch (tname) {
+		case "notice_board":
+			url = "./sub01.jsp";
+			break;
+		case "free_board":
+			url = "./sub03.jsp";
+			break;
+		case "info_board":
+			url = "./sub05.jsp";
+		}
+		JSFunction.alertLocation("글쓰기에 성공하였습니다!", url, out);
 	} else {
 		JSFunction.alertBack("글쓰기에 실패하였습니다.", out);
 	}

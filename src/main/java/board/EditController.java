@@ -31,7 +31,18 @@ public class EditController extends HttpServlet {
 		BoardDTO dto = dao.selectView(num, tname);
 		// dto객체를 request영역에 저장한 후 포워드한다.
 		req.setAttribute("dto", dto);
-		req.getRequestDispatcher("/community/sub01_edit.jsp").forward(req, resp);
+		
+		// 테이블 명에 따라서 포워드 페이지 결정
+		String url = "/community/sub01_edit.jsp";
+		switch (tname) {
+		case "staff_board":
+			url = "/community/sub01_edit.jsp";
+			break;
+		case "protector_board":
+			url = "/community/sub02_edit.jsp";
+			break;
+		}
+		req.getRequestDispatcher(url).forward(req, resp);
 	}
 	
 	/* 수정할 내용을 입력한 후 전송된 폼값을 update쿼리문으로 갱신한다.

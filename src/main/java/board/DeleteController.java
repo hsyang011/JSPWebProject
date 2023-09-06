@@ -34,6 +34,7 @@ public class DeleteController extends HttpServlet {
 			String saveFileName = dto.getSfile();
 			FileUtil.deleteFile(req, "/uploads", saveFileName);
 		}
+		
 		// 게시물 삭제가 완료되면 목록으로 이동한다.
 		JSFunction.alertLocation(resp, "삭제되었습니다.", "../board/list.do");
 	}

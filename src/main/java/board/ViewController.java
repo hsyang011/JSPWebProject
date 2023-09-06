@@ -47,7 +47,17 @@ public class ViewController extends HttpServlet {
 		// 게시물(dto)을 request영역에 저장한 후 뷰로 포워드한다.
 		req.setAttribute("dto", dto);
 		req.setAttribute("isImage", isImage);
-		req.getRequestDispatcher("/community/sub01_view.jsp").forward(req, resp);
+		// 테이블 명에 따라서 포워드 페이지 결정
+		String url = "/community/sub01_view.jsp";
+		switch (tname) {
+		case "staff_board":
+			url = "/community/sub01_view.jsp";
+			break;
+		case "protector_board":
+			url = "/community/sub02_view.jsp";
+			break;
+		}
+		req.getRequestDispatcher(url).forward(req, resp);
 	}
 
 }

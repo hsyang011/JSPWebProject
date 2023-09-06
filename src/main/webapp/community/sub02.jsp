@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
+<%
+//세션영역에 tname속성으로 테이블명 저장
+session.setAttribute("tname", "protector_board");
+session.setAttribute("seqname", "seq_protector_num");
+request.getRequestDispatcher("../board/list.do").forward(request, response);
+%>
 
  <body>
 	<center>

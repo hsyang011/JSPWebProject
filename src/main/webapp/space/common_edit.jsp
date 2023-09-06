@@ -17,7 +17,18 @@ String sessionId = session.getAttribute("UserId").toString();
 // 로그인한 회원이 해당게시물의 작성자인지 확인한다.
 if (!sessionId.equals(dto.getId())) {
 	// 작성자가 아니라면 진입할 수 없도록 하고 뒤로 이동한다.
-	JSFunction.alertLocation("작성자 본인만 수정할 수 있습니다.", "./sub01_list.jsp", out);
+	String url = "./sub01_list.jsp";
+	switch (tname) {
+	case "notice_board":
+		url = "./sub01_list.jsp";
+		break;
+	case "free_board":
+		url = "./sub03_list.jsp";
+		break;
+	case "info_board":
+		url = "./sub05_list.jsp";
+	}
+	JSFunction.alertLocation("작성자 본인만 수정할 수 있습니다.", url, out);
 	return;
 }
 dao.close();

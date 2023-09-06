@@ -24,14 +24,15 @@ function deletePost() {
 
 		<div class="contents_box">
 			<div class="left_contents">
+				
 				<%@ include file = "../include/space_leftmenu.jsp" %>
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub01_title.gif" alt="공지사항" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;공지사항<p>
+					<img src="../images/space/sub05_title.gif" alt="정보자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;정보자료실<p>
 				</div>
-				<div>
+			<div>
 
 <form enctype="multipart/form-data" method="post" action="common_deleteProcess.jsp" name="boardFrm">
 <input type="hidden" name="num" value="<%= num %>" />
@@ -113,13 +114,13 @@ function deletePost() {
 	<%
 	if (session.getAttribute("UserId")!=null && session.getAttribute("UserId").toString().equals(dto.getId())) {
 	%>
-	<button type="button" class="btn btn-primary" onclick="location.href='sub01_edit.jsp?num=<%= dto.getNum() %>'">수정하기</button>
+	<button type="button" class="btn btn-primary" onclick="location.href='sub05_edit.jsp?num=<%= dto.getNum() %>'">수정하기</button>
 	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>
 	<%
 	}
 	%>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='./sub01.jsp';">리스트보기</button>
+		onclick="location.href='./sub05.jsp';">리스트보기</button>
 </div>
 </form> 
 

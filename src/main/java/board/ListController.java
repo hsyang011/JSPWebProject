@@ -87,7 +87,17 @@ public class ListController extends HttpServlet {
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
 		// 포워드
-		req.getRequestDispatcher("/community/sub01_list.jsp").forward(req, resp);
+		// 테이블 명에 따라서 포워드 페이지 결정
+		String url = "/community/sub01_list.jsp";
+		switch (tname) {
+		case "staff_board":
+			url = "/community/sub01_list.jsp";
+			break;
+		case "protector_board":
+			url = "/community/sub02_list.jsp";
+			break;
+		}
+		req.getRequestDispatcher(url).forward(req, resp);
 	}
 
 }

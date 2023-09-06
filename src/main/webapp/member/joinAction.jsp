@@ -35,7 +35,7 @@ int result = dao.joinInsert(dto);
 dao.close();
 
 if (result == 1) {
-	JSFunction.alertLocation("회원가입에 성공하였습니다!", "../main/main.jsp", out);
+	JSFunction.alertLocation("회원가입에 성공하였습니다!", "../main/main.do", out);
 } else {
 	JSFunction.alertBack("회원가입에 실패하였습니다.", out);
 }

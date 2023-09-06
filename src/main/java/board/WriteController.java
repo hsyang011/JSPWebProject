@@ -20,7 +20,19 @@ public class WriteController extends HttpServlet {
 	/* 글쓰기 페이지로 진입할 때는 다른 로직없이 포워드만 진행한다. */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/community/sub01_write.jsp").forward(req, resp);
+		HttpSession sess = req.getSession();
+		String tname = sess.getAttribute("tname").toString();
+		// 테이블 명에 따라서 포워드 페이지 결정
+		String url = "/community/sub01_write.jsp";
+		switch (tname) {
+		case "staff_board":
+			url = "/community/sub01_write.jsp";
+			break;
+		case "protector_board":
+			url = "/community/sub02_write.jsp";
+			break;
+		}
+		req.getRequestDispatcher(url).forward(req, resp);
 	}
 	
 	// 글쓰기는 post방식이 전송이므로 doPost()에서 요청을 처리한다.

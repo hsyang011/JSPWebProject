@@ -60,7 +60,18 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 	dao.close();
 	
 	if (affected == 1) {
-		JSFunction.alertLocation("수정하기에 성공하였습니다!", "./sub01_view.jsp?num="+dto.getNum(), out);
+		String url = "./sub01_view.jsp";
+		switch (tname) {
+		case "notice_board":
+			url = "./sub01_view.jsp";
+			break;
+		case "free_board":
+			url = "./sub03_view.jsp";
+			break;
+		case "info_board":
+			url = "./sub05_view.jsp";
+		}
+		JSFunction.alertLocation("수정하기에 성공하였습니다!", url+"?num="+dto.getNum(), out);
 	} else {
 		JSFunction.alertBack("수정하기에 실패하였습니다.", out);
 	}

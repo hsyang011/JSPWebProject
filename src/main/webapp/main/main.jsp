@@ -1,10 +1,8 @@
 <%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String savedId = CookieManager.readCookie(request, "SavedId");
-String isChecked = savedId=="" ? "" : "checked";
-%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -44,10 +42,8 @@ function formValidate(frm) {
 			<div class="main_con_left">
 				<p class="main_title" style="border:0px; margin-bottom:0px;"><img src="../images/main_title01.gif" alt="로그인 LOGIN" /></p>
 				<div class="login_box">
-<%
-/* session영역에 해당 속성값이 있는지 확인한다. */
-if(session.getAttribute("UserId") == null) {
-%>
+
+<c:if test="${ empty UserId }">
 					<form action="../member/loginProcess.jsp" method="post" name="loginFrm" onsubmit="return formValidate(this);">
 					<table cellpadding="0" cellspacing="0" border="0">
 						<colgroup>
@@ -57,32 +53,29 @@ if(session.getAttribute("UserId") == null) {
 						</colgroup>
 						<tr>
 							<th><img src="../images/login_tit01.gif" alt="아이디" /></th>
-							<td><input type="text" name="user_id" value="<%= savedId=="OFF" ? "" : savedId %>" class="login_input" /></td>
-							<td rowspan="2"><input type="image" src="../images/login_btn01.gif" alt="로그인" /></td>
+							<td><input type="text" name="user_id" value="${ savedId }" class="login_input" tabindex="1" /></td>
+							<td rowspan="2"><input type="image" src="../images/login_btn01.gif" alt="로그인" tabindex="3" /></td>
 						</tr>
 						<tr>
 							<th><img src="../images/login_tit02.gif" alt="패스워드" /></th>
-							<td><input type="text" name="user_pw" value="" class="login_input" /></td>
+							<td><input type="text" name="user_pw" value="" class="login_input" tabindex="2" /></td>
 						</tr>
 					</table>
 					<p>
-						<input type="checkbox" name="savedId" <%= isChecked %> value="1" /><img src="../images/login_tit03.gif" alt="저장" />
+						<input type="checkbox" name="savedId" ${ isChecked } value="1" /><img src="../images/login_tit03.gif" alt="저장" />
 						<a href="../member/id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>
 						<a href="../member/join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a>
 					</p>
 					</form>
-<%
-} else {
-%>					 
+</c:if>
+<c:if test="${ not empty UserId }">	 
 					<!-- 로그인 후 -->
-					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
+					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;">${ UserName }님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
 						<a href="../member/edit.jsp"><img src="../images/login_btn04.gif" /></a>
 						<a href="../center/sub07.jsp"><img src="../images/login_btn05.gif" /></a>
 					</p>
-<%
-}
-%>		 
+</c:if> 
 				</div>
 			</div>
 			<div class="main_con_center">
