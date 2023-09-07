@@ -8,7 +8,7 @@
 <%
 // 일련번호를 폼값으로 받는다.
 String num = request.getParameter("num");
-String tname = session.getAttribute("tname").toString();
+String tname = request.getParameter("tname");
 
 BoardDTO dto = new BoardDTO();
 BoardDAO dao = new BoardDAO();
@@ -30,17 +30,7 @@ if (sessionId.equals(dto.getId())) {
 	dao.close();
 	
 	if (delResult == 1) {
-		String url = "./sub01.jsp";
-		switch (tname) {
-		case "notice_board":
-			url = "./sub01.jsp";
-			break;
-		case "free_board":
-			url = "./sub03.jsp";
-			break;
-		case "info_board":
-			url = "./sub05.jsp";
-		}
+		String url = "./list.jsp?tname=" + tname;
 		/* 게시물이 삭제되면 목록으로 이동한다. */
 		JSFunction.alertLocation("삭제되었습니다.", url, out);
 	} else {

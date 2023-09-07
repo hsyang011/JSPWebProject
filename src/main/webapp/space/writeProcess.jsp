@@ -9,24 +9,23 @@
 
 // 세션영역에서 id값 가져오기
 String id = session.getAttribute("UserId").toString();
-String tname = session.getAttribute("tname").toString();
+// 세션영역에서 테이블명 가져오기
+String tname = request.getParameter("tname"); // notice_board -> seq_notice_num
+String sequence = "seq_" + tname.split("_")[0] + "_num";
+
 // 파라미터에서 각 속성값 가져오기
-String num = request.getParameter("num");
-String prevOfile = request.getParameter("prevOfile");
-String prevSfile = request.getParameter("prevSfile");
 String pass = request.getParameter("pass");
 String title = request.getParameter("title");
 String content = request.getParameter("content");
 
 
+
 BoardDTO dto = new BoardDTO();
-dto.setNum(num);
 dto.setId(id);
 dto.setTitle(title);
 dto.setContent(content);
 
-
-
+// 비밀번호가 일치하면 파일 업로드 및 게시물 게시
 if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 	// 1. 파일 업로드 처리
 	// 업로드 디렉토리의 물리적 경로 확인
@@ -48,32 +47,19 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 		String saveFileName = FileUtil.renameFile(saveDirectory, originalFileName);
 		dto.setOfile(originalFileName);
 		dto.setSfile(saveFileName);
-		
-		FileUtil.deleteFile(request, "/uploads", prevSfile);
-	} else {
-		dto.setOfile(prevOfile);
-		dto.setSfile(prevSfile);
 	}
-	
+
+
 	BoardDAO dao = new BoardDAO();
-	int affected = dao.updateEdit(dto, tname);
+	int result = dao.insertWrite(dto, tname, sequence);
 	dao.close();
 	
-	if (affected == 1) {
-		String url = "./sub01_view.jsp";
-		switch (tname) {
-		case "notice_board":
-			url = "./sub01_view.jsp";
-			break;
-		case "free_board":
-			url = "./sub03_view.jsp";
-			break;
-		case "info_board":
-			url = "./sub05_view.jsp";
-		}
-		JSFunction.alertLocation("수정하기에 성공하였습니다!", url+"?num="+dto.getNum(), out);
+	
+	if (result == 1) {
+		String url = "./list.jsp?tname=" + tname;
+		JSFunction.alertLocation("글쓰기에 성공하였습니다!", url, out);
 	} else {
-		JSFunction.alertBack("수정하기에 실패하였습니다.", out);
+		JSFunction.alertBack("글쓰기에 실패하였습니다.", out);
 	}
 } else {
 	JSFunction.alertBack("비밀번호가 틀렸습니다.", out);
