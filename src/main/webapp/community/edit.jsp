@@ -39,8 +39,17 @@ function formValidate(frm) {
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
+<!-- 각 테이블마다 다른 배너이미지가 보이게 처리 -->
+<c:choose>
+	<c:when test="${ param.tname eq 'staff_board' }">
 					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
+	</c:when>
+	<c:when test="${ param.tname eq 'protector_board' }">
+					<img src="../images/community/sub02_title.gif" alt="보호자 게시판" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;보호자 게시판<p>
+	</c:when>
+</c:choose>
 				</div>
 			<div>
 
@@ -48,6 +57,7 @@ function formValidate(frm) {
 <input type="hidden" name="num" value="${ dto.num }" />
 <input type="hidden" name="prevOfile" value="${ dto.ofile }" />
 <input type="hidden" name="prevSfile" value="${ dto.sfile }" />
+<input type="hidden" name="tname"  value="${ param.tname }"/>
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>

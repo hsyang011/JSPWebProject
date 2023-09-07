@@ -21,7 +21,6 @@ public class DownloadController extends HttpServlet {
 		// 파라미터 받기
 		String ofile = req.getParameter("ofile"); // 원본 파일명
 		String sfile = req.getParameter("sfile"); // 저장된 파일명
-		String num = req.getParameter("num"); // 게시물 일련번호
 		
 		// 파일 다운로드
 		FileUtil.download(req, resp, "/uploads", sfile, ofile);

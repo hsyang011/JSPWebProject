@@ -21,9 +21,8 @@ public class EditController extends HttpServlet {
 	// 단순한 페이지 이동이므로 get방식 요청이다.
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 세션영역에서 테이블명 가져오기
-		HttpSession sess = req.getSession();
-		String tname = sess.getAttribute("tname").toString();
+		// 테이블명 가져오기
+		String tname = req.getParameter("tname");
 		// 일련번호를 받는다.
 		String num = req.getParameter("num");
 		// DAO객체를 생성한 후 기존 게시물의 내용을 가져온다.
@@ -33,15 +32,7 @@ public class EditController extends HttpServlet {
 		req.setAttribute("dto", dto);
 		
 		// 테이블 명에 따라서 포워드 페이지 결정
-		String url = "/community/sub01_edit.jsp";
-		switch (tname) {
-		case "staff_board":
-			url = "/community/sub01_edit.jsp";
-			break;
-		case "protector_board":
-			url = "/community/sub02_edit.jsp";
-			break;
-		}
+		String url = "/community/edit.jsp?tname=" + tname;
 		req.getRequestDispatcher(url).forward(req, resp);
 	}
 	
@@ -52,7 +43,7 @@ public class EditController extends HttpServlet {
 		// 세션영역에서 id값 가져오기
 		HttpSession sess = req.getSession();
 		String id = sess.getAttribute("UserId").toString();
-		String tname = sess.getAttribute("tname").toString();
+		String tname = req.getParameter("tname");
 		// 파라미터에서 각 속성값 가져오기
 		String num = req.getParameter("num");
 		String prevOfile = req.getParameter("prevOfile");
@@ -105,7 +96,7 @@ public class EditController extends HttpServlet {
 			dao.close();
 			
 			if (affected == 1) {
-				JSFunction.alertLocation(resp, "수정하기에 성공하였습니다!", "../board/view.do?num="+dto.getNum());
+				JSFunction.alertLocation(resp, "수정하기에 성공하였습니다!", "../board/view.do?num="+dto.getNum()+"&tname=" + tname);
 			} else {
 				JSFunction.alertBack(resp, "수정하기에 실패하였습니다.");
 			}

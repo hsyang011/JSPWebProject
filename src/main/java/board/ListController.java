@@ -36,9 +36,8 @@ public class ListController extends HttpServlet {
 			map.put("keyString", keyString);
 		}
 
-		// 세션영역에 저장된 테이블 이름 가져오기
-		HttpSession sess = req.getSession();
-		String tname = sess.getAttribute("tname").toString();
+		// 파라미터로 들어온 테이블 이름 가져오기
+		String tname = req.getParameter("tname");
 		System.out.println("테이블명 가져왔을까요?" + tname);
 		map.put("tname", tname);
 
@@ -73,7 +72,7 @@ public class ListController extends HttpServlet {
 		
 		
 		// 뷰에 전달할 매개변수 추가
-		String pagingImg = BoardPage.pagingImg(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
+		String pagingImg = BoardPage.pagingImg(totalCount, pageSize, blockPage, pageNum, "../board/list.do?tname=" + tname);
 		// 페이지 번호
 		map.put("pagingImg", pagingImg);
 		// 전체게시물의 갯수
@@ -88,15 +87,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("map", map);
 		// 포워드
 		// 테이블 명에 따라서 포워드 페이지 결정
-		String url = "/community/sub01_list.jsp";
-		switch (tname) {
-		case "staff_board":
-			url = "/community/sub01_list.jsp";
-			break;
-		case "protector_board":
-			url = "/community/sub02_list.jsp";
-			break;
-		}
+		String url = "/community/list.jsp?tname=" + tname;
 		req.getRequestDispatcher(url).forward(req, resp);
 	}
 

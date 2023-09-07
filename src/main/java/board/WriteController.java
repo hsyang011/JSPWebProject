@@ -20,18 +20,9 @@ public class WriteController extends HttpServlet {
 	/* 글쓰기 페이지로 진입할 때는 다른 로직없이 포워드만 진행한다. */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession sess = req.getSession();
-		String tname = sess.getAttribute("tname").toString();
+		String tname = req.getParameter("tname");
 		// 테이블 명에 따라서 포워드 페이지 결정
-		String url = "/community/sub01_write.jsp";
-		switch (tname) {
-		case "staff_board":
-			url = "/community/sub01_write.jsp";
-			break;
-		case "protector_board":
-			url = "/community/sub02_write.jsp";
-			break;
-		}
+		String url = "/community/write.jsp?tname=" + tname;
 		req.getRequestDispatcher(url).forward(req, resp);
 	}
 	
@@ -42,8 +33,8 @@ public class WriteController extends HttpServlet {
 		HttpSession sess = req.getSession();
 		String id = sess.getAttribute("UserId").toString();
 		// 세션영역에서 테이블명 가져오기
-		String tname = sess.getAttribute("tname").toString();
-		String sequence = sess.getAttribute("seqname").toString();
+		String tname = req.getParameter("tname"); // notice_board -> seq_notice_num
+		String sequence = "seq_" + tname.split("_")[0] + "_num"; 
 		// 파라미터에서 각 속성값 가져오기
 		String pass = req.getParameter("pass");
 		String title = req.getParameter("title");
@@ -87,7 +78,7 @@ public class WriteController extends HttpServlet {
 			
 			
 			if (result == 1) {
-				JSFunction.alertLocation(resp, "글쓰기에 성공하였습니다!", "../board/list.do");
+				JSFunction.alertLocation(resp, "글쓰기에 성공하였습니다!", "../board/list.do?tname=" + tname);
 			} else {
 				JSFunction.alertBack(resp, "글쓰기에 실패하였습니다.");
 			}

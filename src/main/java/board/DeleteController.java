@@ -18,9 +18,7 @@ public class DeleteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession sess = req.getSession();
-		
-		String tname = sess.getAttribute("tname").toString();
+		String tname = req.getParameter("tname");
 		String num = req.getParameter("num");
 				
 		BoardDAO dao = new BoardDAO();
@@ -36,7 +34,7 @@ public class DeleteController extends HttpServlet {
 		}
 		
 		// 게시물 삭제가 완료되면 목록으로 이동한다.
-		JSFunction.alertLocation(resp, "삭제되었습니다.", "../board/list.do");
+		JSFunction.alertLocation(resp, "삭제되었습니다.", "../board/list.do?tname=" + tname);
 	}
 
 }

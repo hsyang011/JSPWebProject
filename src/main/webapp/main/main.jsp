@@ -79,21 +79,19 @@ function formValidate(frm) {
 				</div>
 			</div>
 			<div class="main_con_center">
-				<p class="main_title"><img src="../images/main_title02.gif" alt="공지사항 NOTICE" /><a href="/space/sub01.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title02.gif" alt="공지사항 NOTICE" /><a href="../space/list.jsp?tname=notice_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
-					<li><p><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></p></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
+<c:forEach items="${ notice }" var="row">
+	<li><p><a href="../space/view.jsp?num=${ row.num }&tname=notice_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
+</c:forEach>
 				</ul>
 			</div>
 			<div class="main_con_right">
-				<p class="main_title"><img src="../images/main_title03.gif" alt="자유게시판 FREE BOARD" /><a href="/space/sub03.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title03.gif" alt="자유게시판 FREE BOARD" /><a href="../space/list.jsp?tname=free_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
-					<li><p><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></p></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
-					<li><a href="">마포 구립 장애인 직업재활센터 홈페이지</a><span>2012.01.26</span></li>
+<c:forEach items="${ free }" var="row">
+	<li><p><a href="../space/view.jsp?num=${ row.num }&tname=free_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
+</c:forEach>
 				</ul>
 			</div>
 		</div>

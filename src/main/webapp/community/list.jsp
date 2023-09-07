@@ -3,10 +3,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../include/global_head.jsp" %>
-<%-- <%
-request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
-%> --%>
  <body>
+ <c:if test="${ param.tname eq 'staff_board' }">
+	 <script type="text/javascript">
+		$(function() {
+			var chk = prompt("직원 전용 게시판입니다. 암호를 입력해주세요.");
+			if (chk == "1234") {
+				alert("직원 확인되었습니다. 게시판으로 이동합니다.");
+			} else {
+				alert("암호가 틀렸습니다.");
+				location.href = "../main/main.do";
+			}
+		});
+	</script>
+ </c:if>
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
@@ -20,8 +30,17 @@ request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
+<!-- 각 테이블마다 다른 배너이미지가 보이게 처리 -->
+<c:choose>
+	<c:when test="${ param.tname eq 'staff_board' }">
+					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
+	</c:when>
+	<c:when test="${ param.tname eq 'protector_board' }">
 					<img src="../images/community/sub02_title.gif" alt="보호자 게시판" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;보호자 게시판<p>
+	</c:when>
+</c:choose>
 				</div>
 			</div>
 			<div class="row text-right" style="margin-bottom:20px; padding-right:50px;">
@@ -72,7 +91,7 @@ request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
 	<c:forEach items="${ boardLists }" var="row" varStatus="loop">
 	<tr>
 		<td class="text-center">${ map.totalCount - (((map.pageNum-1)*map.pageSize)+loop.index) }</td>
-		<td class="text-left"><a href="../board/view.do?num=${ row.num }">${ row.title }</a></td>
+		<td class="text-left"><a href="../board/view.do?tname=${ param.tname }&num=${ row.num }">${ row.title }</a></td>
 		<td class="text-center">${ row.name }</td>
 		<td class="text-center">${ row.postdate }</td>
 		<td class="text-center">${ row.visitcount }</td>
@@ -94,7 +113,7 @@ request.getRequestDispatcher("./sub01_list.jsp").forward(request, response);
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
 	<button type="button" class="btn btn-default"
-		onclick="location.href='../board/write.do';" style="margin-left: 18px">글쓰기</button>
+		onclick="location.href='../board/write.do?tname=${ param.tname }';" style="margin-left: 18px">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

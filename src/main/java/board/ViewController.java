@@ -19,8 +19,7 @@ public class ViewController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 테이블명 가져오기
-		HttpSession sess = req.getSession();
-		String tname = sess.getAttribute("tname").toString();
+		String tname = req.getParameter("tname");
 		// 게시물 불러오기
 		BoardDAO dao = new BoardDAO();
 		// 파라미터로 전달된 일련번호를 받는다.
@@ -48,15 +47,7 @@ public class ViewController extends HttpServlet {
 		req.setAttribute("dto", dto);
 		req.setAttribute("isImage", isImage);
 		// 테이블 명에 따라서 포워드 페이지 결정
-		String url = "/community/sub01_view.jsp";
-		switch (tname) {
-		case "staff_board":
-			url = "/community/sub01_view.jsp";
-			break;
-		case "protector_board":
-			url = "/community/sub02_view.jsp";
-			break;
-		}
+		String url = "/community/view.jsp?tname=" + tname;
 		req.getRequestDispatcher(url).forward(req, resp);
 	}
 

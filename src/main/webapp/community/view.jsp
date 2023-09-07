@@ -27,12 +27,21 @@ function deletePost() {
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
+<!-- 각 테이블마다 다른 배너이미지가 보이게 처리 -->
+<c:choose>
+	<c:when test="${ param.tname eq 'staff_board' }">
+					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
+	</c:when>
+	<c:when test="${ param.tname eq 'protector_board' }">
 					<img src="../images/community/sub02_title.gif" alt="보호자 게시판" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;보호자 게시판<p>
+	</c:when>
+</c:choose>
 				</div>
 			<div>
 
-<form enctype="multipart/form-data" method="post" action="../board/delete.do" name="boardFrm">
+<form enctype="multipart/form-data" method="post" action="../board/delete.do?tname=${ param.tname }" name="boardFrm">
 <input type="hidden" name="num" value="${ dto.num }" />
 <table class="table table-bordered">
 <colgroup>
@@ -89,7 +98,7 @@ function deletePost() {
 		<td colspan="3">
 			<c:if test="${ not empty dto.ofile }">
 			${ dto.ofile }
-			<a href="../board/download.do?ofile=${ dto.ofile }&sfile=${ dto.sfile }&num=${ dto.num }">
+			<a href="../board/download.do?ofile=${ dto.ofile }&sfile=${ dto.sfile }">
 				[다운로드]
 			</a>
 			</c:if>
@@ -102,11 +111,11 @@ function deletePost() {
 	<!-- 각종 버튼 부분 -->
 	<!-- 로그인이 된 상태에서 게시물 작성자와 로그인 정보가 일치하면 수정, 삭제하기 버튼이 보이게 처리한다. -->
 	<c:if test="${ not empty UserId and UserId eq dto.id }">
-	<button type="button" class="btn btn-primary" onclick="location.href='../board/edit.do?num=${ dto.num }'">수정하기</button>
+	<button type="button" class="btn btn-primary" onclick="location.href='../board/edit.do?num=${ dto.num }&tname=${ param.tname }'">수정하기</button>
 	<button type="button" class="btn btn-success" onclick="deletePost();">삭제하기</button>
 	</c:if>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='../board/list.do';">리스트보기</button>
+		onclick="location.href='../board/list.do?tname=${ param.tname }';">리스트보기</button>
 </div>
 </form> 
 
