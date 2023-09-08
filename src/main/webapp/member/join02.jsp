@@ -99,8 +99,19 @@ function formValidate(frm) {
 }
 
 /* 아이디 중복확인 */
-function id_check_person() {
-	
+function id_check_person(frm) {
+    if (frm.id.value == ''){
+        alert("아이디를 입력후 중복확인 해주세요.");
+        frm.id.focus();
+    } else{
+        //아이디 중복확인 창을 띄울때 입력한 아이디를 쿼리스트링으로 
+        //넘겨준다. 
+        window.open('joinOverlap.jsp?id='+frm.id.value, 
+            'idOver', 
+            'width=500,height=300');
+        //입력한 아이디를 수정할 수 없도록 속성을 추가한다. 
+        frm.id.readOnly = true;
+    }
 }
 
 /* 이메일 도메인 선택 */
@@ -170,7 +181,7 @@ function focusMove(thisObj, nextName, inputLen) {
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit002.gif" /></th>
-						<td><input type="text" name="id"  value="" class="join_input" />&nbsp;<a onclick="id_check_person();" style="cursor:hand;"><img src="../images/btn_idcheck.gif" alt="중복확인"/></a>&nbsp;&nbsp;<span>* 4자 이상 12자 이내의 영문/숫자 조합하여 공백 없이 기입</span></td>
+						<td><input type="text" name="id"  value="" class="join_input" />&nbsp;<a onclick="id_check_person(joinForm);" style="cursor:hand;"><img src="../images/btn_idcheck.gif" alt="중복확인"/></a>&nbsp;&nbsp;<span>* 4자 이상 12자 이내의 영문/숫자 조합하여 공백 없이 기입</span></td>
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit003.gif" /></th>

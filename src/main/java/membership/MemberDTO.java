@@ -12,6 +12,7 @@ public class MemberDTO {
 	private String zipcode;
 	private String addr1;
 	private String addr2;
+	private String grade;
 	
 	public String getName() {
 		return name;
@@ -72,6 +73,12 @@ public class MemberDTO {
 	}
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 	
 }

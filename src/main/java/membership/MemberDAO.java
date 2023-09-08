@@ -1,8 +1,34 @@
 package membership;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import common.JDBConnect;
 
 public class MemberDAO extends JDBConnect {
+	
+	// 아이디 중복확인을 위한 메소드 정의
+	public boolean idOverlap(String id) {
+		// 동적 쿼리문 작성
+		String query = " SELECT id FROM member WHERE id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			// 첫번째 인파라미터에 매개변수 id를 대입
+			psmt.setString(1, id);
+			// 쿼리 실행
+			rs = psmt.executeQuery();
+			
+			// rs가 존재할 경우 false반환
+			if (rs.next()) {
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("아이디 중복확인 중 예외 발생");
+			e.printStackTrace();
+		}
+		// if문에서 걸리지 않았다면 true반환
+		return true;
+	}
 
 	// 회원가입
 	public int joinInsert(MemberDTO dto) {
@@ -78,6 +104,7 @@ public class MemberDAO extends JDBConnect {
 				dto.setZipcode(rs.getString(8));
 				dto.setAddr1(rs.getString(9));
 				dto.setAddr2(rs.getString(10));
+				dto.setGrade(rs.getString(11));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,6 +152,46 @@ public class MemberDAO extends JDBConnect {
 		}
 		
 		return pw;
+	}
+	
+	// 관리자 모드에서 회원의 아이디, 이름, 이메일 정보 가져오기
+	public List<MemberDTO> allMembers() {
+		List<MemberDTO> members = new ArrayList<MemberDTO>();
+		// 동적 쿼리문 작성
+		String query = " SELECT id, name, email FROM member WHERE NOT grade='Super' ";
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			// rs가 존재할 경우 false반환
+			while (rs.next()) {
+				MemberDTO dto = new MemberDTO();
+				
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				
+				members.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("회원 정보 조회 중 예외 발생");
+			e.printStackTrace();
+		}
+		return members; 
+	}
+	
+	// 회원 강제 퇴출
+	public int kickMember(String id) {
+		int result = 0;
+		String query = " DELETE FROM member WHERE id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("회원 퇴출 중 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 }

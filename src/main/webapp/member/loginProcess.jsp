@@ -28,7 +28,11 @@ if (dto.getId() != null) {
 	session.setAttribute("UserName", dto.getName());
 	session.setAttribute("UserEmail", dto.getEmail());
 	
-	JSFunction.alertLocation("로그인에 성공하였습니다!", "../main/main.do", out);
+	if (dto.getGrade().equals("Normal")) {
+		JSFunction.alertLocation("로그인에 성공하였습니다!", "../main/main.do", out);
+	} else if (dto.getGrade().equals("Super")) {
+		JSFunction.alertLocation("슈퍼 계정으로 접속합니다.", "../main/super.do", out);
+	}
 // 로그인 실패로 간주한다.
 } else {
 	JSFunction.alertBack("로그인에 실패하였습니다.", out);

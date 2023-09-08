@@ -178,7 +178,7 @@ for (BoardDTO dto : boardLists) {
 	<!-- 페이지번호 부분 -->
 	<ul class="pagination justify-content-center">
 		<li><span class="glyphicon glyphicon-fast-backward"></span></li>
-		<li><%= BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %></li>
+		<li><%= BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, (request.getRequestURI()) + "?tname=" + tname) %></li>
 		<li><span class="glyphicon glyphicon-fast-forward"></span></li>
 	</ul>	
 </div>
