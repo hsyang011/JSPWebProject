@@ -1,3 +1,6 @@
+<%@page import="utils.JSFunction"%>
+<%@page import="market.ExpstudyDTO"%>
+<%@page import="market.BlueCleaningDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="membership.MemberDTO"%>
 <%@page import="java.util.List"%>
@@ -6,7 +9,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%
+// 잘못된 접근일 경우에 대비해 슈퍼 계정권한이 있는지 확인한다.
+if (!(session.getAttribute("UserGrade") != null && session.getAttribute("UserGrade").toString().equals("Super"))) {
+	JSFunction.alertLocation("슈퍼 계정만 액세스할 수 있습니다.", "../member/login.jsp", out);
+	// return이후의 문장은 실행되지 않는다.
+	return;
+}
 List<MemberDTO> members = (ArrayList<MemberDTO>)request.getAttribute("members");
+List<BlueCleaningDTO> bcList = (ArrayList<BlueCleaningDTO>)request.getAttribute("bcList");
+List<ExpstudyDTO> exList = (ArrayList<ExpstudyDTO>)request.getAttribute("exList");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,14 +46,34 @@ function formValidate(frm) {
 	}
 }
 
-// 회원 방출
-function kick() {
-	var kickId = document.getElementById("kickId").innerText;
-	var isKick = confirm(kickId + " 회원을 정말로 강제 퇴출 시키겠습니까?");
-	if (isKick) {
-		location.href = "../member/kick.jsp?id=" + kickId;
-	}
-}
+$(function() {
+	// 회원 방출
+	$(".kick").click(function(e) {
+		var id = $(e.target).parent().prev().prev().prev().text();
+		var isKick = confirm(id + " 회원을 정말로 강제 퇴출 시키겠습니까?");
+		if (isKick) {
+			location.href = "../member/kick.jsp?id=" + id;
+		}
+	});
+	
+	// 블루클리닉 신청 접수 취소
+	$(".bcCancel").click(function(e) {
+		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
+		if (isAppCancel) {
+			location.href = "../market/bcCancel.jsp?num=" + num;
+		}
+	});
+	
+	// 체험학습신청 접수 취소
+	$(".exCancel").click(function(e) {
+		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
+		if (isAppCancel) {
+			location.href = "../market/exCancel.jsp?num=" + num;
+		}
+	});
+});
 </script>
 
 </head>
@@ -51,7 +82,9 @@ function kick() {
 	<div id="wrap">
 		<%@ include file="../include/top.jsp"%>
 
+		<!-- 회원정보 리스트 -->
 		<div class="row container">
+			<h5>※회원정보 리스트※</h5>
 			<!-- 게시판리스트부분 -->
 			<table class="table table-bordered table-hover">
 			<colgroup>
@@ -76,10 +109,130 @@ function kick() {
 for (MemberDTO dto : members) {
 %>
 			<tr>
-				<td class="text-center" id="kickId"><%= dto.getId() %></td>
+				<td class="text-center"><%= dto.getId() %></td>
 				<td class="text-left"><%= dto.getName() %></td>
 				<td class="text-center"><%= dto.getEmail() %></td>
-				<td class="text-center"><a href="javascript:void(0);" onclick="kick();">퇴출</a></td>
+				<td class="text-center"><a href="javascript:void(0);" class="kick">퇴출</a></td>
+			</tr>
+<%
+}
+%>
+			</tbody>
+			</table>
+		</div>
+		
+		<!-- 블루클리닝 신청 리스트 -->
+		<div class="row container">
+			<h5>※블루클리닝 신청 리스트※</h5>
+			<!-- 게시판리스트부분 -->
+			<table class="table table-bordered table-hover">
+			<%-- <colgroup>
+				<col width="100px"/>
+				<col width="120px"/>
+				<col width="200px"/>
+				<col width="80px"/>
+			</colgroup> --%>
+			
+			<thead>
+			<tr class="success">
+				<th class="text-center">번호</th>
+				<th class="text-center">아이디</th>
+				<th class="text-left">고객명/회사명</th>
+				<th class="text-center">청소할 곳 주소</th>
+				<th class="text-center">연락처</th>
+				<th class="text-center">휴대전화</th>
+				<th class="text-center">이메일</th>
+				<th class="text-center">청소종류</th>
+				<th class="text-center">분양평수/등기평수</th>
+				<th class="text-center">청소희망날짜</th>
+				<th class="text-center">접수종류 구분</th>
+				<th class="text-center">기타</th>
+				<th class="text-center">접수 취소</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<!-- 리스트반복 -->
+<%
+for (BlueCleaningDTO dto : bcList) {
+%>
+			<tr>
+				<td class="text-center"><%= dto.getNum() %></td>
+				<td class="text-center"><%= dto.getId() %></td>
+				<td class="text-left"><%= dto.getName() %></td>
+				<td class="text-center"><%= dto.getAddr() %></td>
+				<td class="text-center"><%= dto.getTel() %></td>
+				<td class="text-center"><%= dto.getMobile() %></td>
+				<td class="text-center"><%= dto.getEmail() %></td>
+				<td class="text-center"><%= dto.getCleaning_type() %></td>
+				<td class="text-center"><%= dto.getArea() %></td>
+				<td class="text-center"><%= dto.getCleaning_date() %></td>
+				<td class="text-center"><%= dto.getApplication_type() %></td>
+				<td class="text-center"><%= dto.getEtc() %></td>
+				<td class="text-center"><a href="javascript:void(0);" class="bcCancel">취소</a></td>
+			</tr>
+<%
+}
+%>
+			</tbody>
+			</table>
+		</div>
+		
+		<!-- 체험학습신청 리스트 -->
+		<div class="row container">
+			<h5>※체험학습신청 리스트※</h5>
+			<!-- 게시판리스트부분 -->
+			<table class="table table-bordered table-hover">
+			<%-- <colgroup>
+				<col width="100px"/>
+				<col width="120px"/>
+				<col width="200px"/>
+				<col width="80px"/>
+			</colgroup> --%>
+			
+			<thead>
+			<tr class="success">
+				<th class="text-center">번호</th>
+				<th class="text-center">아이디</th>
+				<th class="text-left">고객명/회사명</th>
+				<th class="text-center">장애유무</th>
+				<th class="text-center">주요장애유형</th>
+				<th class="text-center">보장구 사용유무</th>
+				<th class="text-center">보장구 명</th>
+				<th class="text-center">연락처</th>
+				<th class="text-center">휴대전화</th>
+				<th class="text-center">이메일</th>
+				<th class="text-center">케잌체험</th>
+				<th class="text-center">쿠키체험</th>
+				<th class="text-center">체험희망날짜</th>
+				<th class="text-center">접수종류 구분</th>
+				<th class="text-center">기타</th>
+				<th class="text-center">접수 취소</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<!-- 리스트반복 -->
+<%
+for (ExpstudyDTO dto : exList) {
+%>
+			<tr>
+				<td class="text-center"><%= dto.getNum() %></td>
+				<td class="text-center"><%= dto.getId() %></td>
+				<td class="text-left"><%= dto.getName() %></td>
+				<td class="text-center"><%= dto.getImpaired() %></td>
+				<td class="text-center"><%= dto.getImpaired_type() %></td>
+				<td class="text-center"><%= dto.getAssist() %></td>
+				<td class="text-center"><%= dto.getAssist_type() %></td>
+				<td class="text-center"><%= dto.getTel() %></td>
+				<td class="text-center"><%= dto.getMobile() %></td>
+				<td class="text-center"><%= dto.getEmail() %></td>
+				<td class="text-center"><%= dto.getExp_cake() %></td>
+				<td class="text-center"><%= dto.getExp_cookie() %></td>
+				<td class="text-center"><%= dto.getExpstudy_date() %></td>
+				<td class="text-center"><%= dto.getApplication_type() %></td>
+				<td class="text-center"><%= dto.getEtc() %></td>
+				<td class="text-center"><a href="javascript:void(0);" class="exCancel">취소</a></td>
 			</tr>
 <%
 }

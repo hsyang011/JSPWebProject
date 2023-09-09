@@ -8,9 +8,11 @@
 <%
 // 테이블 가져오기
 String tname = request.getParameter("tname");
-// num가져오기
+// num값을 가져온다.
 String num = request.getParameter("num");
 BoardDAO dao = new BoardDAO();
+// num값을 통해서 virtualNum을 구한다.
+String virtualNum = dao.getVirtualNum(num, tname);
 // 조회수 증가
 dao.updateVisitCount(num, tname);
 
@@ -81,7 +83,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			<%= dto.getName() %>
+			<%= virtualNum %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">작성일</th>

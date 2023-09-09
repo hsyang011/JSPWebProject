@@ -27,6 +27,7 @@ if (dto.getId() != null) {
 	session.setAttribute("UserPw", dto.getPass());
 	session.setAttribute("UserName", dto.getName());
 	session.setAttribute("UserEmail", dto.getEmail());
+	session.setAttribute("UserGrade", dto.getGrade());
 	
 	if (dto.getGrade().equals("Normal")) {
 		JSFunction.alertLocation("로그인에 성공하였습니다!", "../main/main.do", out);

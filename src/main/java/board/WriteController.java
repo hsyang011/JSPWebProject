@@ -73,6 +73,7 @@ public class WriteController extends HttpServlet {
 	
 			// 2. 파일 업로드 외 처리 ====================================
 			BoardDAO dao = new BoardDAO();
+			
 			int result = dao.insertWrite(dto, tname, sequence);
 			dao.close();
 			

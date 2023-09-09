@@ -94,6 +94,25 @@ public class BoardDAO extends JDBConnect {
 		return bbs;
 	}
 	
+	// 게시물의 가상번호를 구한다.
+	public String getVirtualNum(String num, String tname) {
+		String virtualNum = "";
+		String query = " SELECT COUNT(*) FROM " + tname + " WHERE num<=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				virtualNum = rs.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println("게시물의 가상번호를 구하는 중 예외 발생");
+			e.printStackTrace();
+		}
+		// 가상번호를 반환한다.
+		return virtualNum;
+	}
+	
 	// 게시물의 조회수를 1 증가시킨다.
 	public void updateVisitCount(String num, String tname) {
 		/* 게시물의 일련번호를 통해 visitcount를 1 증가시킨다. 해당 컬럼은

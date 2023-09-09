@@ -149,7 +149,7 @@ for (BoardDTO dto : boardLists) {
 %>
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="view.jsp?num=<%= dto.getNum() %>&tname=<%= tname %>"><%= dto.getTitle() %></a></td>
+		<td class="text-left"><a href="view.jsp?num=<%= dto.getNum() %>&tname=<%= tname %>&virtualNum=<%= virtualNum %>"><%= dto.getTitle() %></a></td>
 		<td class="text-center"><%= dto.getName() %></td>
 		<td class="text-center"><%= dto.getPostdate() %></td>
 		<td class="text-center"><%= dto.getVisitcount() %></td>
