@@ -1,22 +1,10 @@
+<%@page import="utils.JSFunction"%>
 <%@page import="board.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="../include/global_head.jsp" %>
  <body>
- <c:if test="${ param.tname eq 'staff_board' }">
-	 <script type="text/javascript">
-		$(function() {
-			var chk = prompt("직원 전용 게시판입니다. 암호를 입력해주세요.");
-			if (chk == "1234") {
-				alert("직원 확인되었습니다. 게시판으로 이동합니다.");
-			} else {
-				alert("암호가 틀렸습니다.");
-				location.href = "../main/main.do";
-			}
-		});
-	</script>
- </c:if>
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
