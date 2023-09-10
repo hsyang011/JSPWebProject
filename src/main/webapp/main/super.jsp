@@ -61,7 +61,7 @@ $(function() {
 		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
 		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
 		if (isAppCancel) {
-			location.href = "../market/bcCancel.jsp?num=" + num;
+			location.href = "../market/bluecleaningCancel.jsp?num=" + num;
 		}
 	});
 	
@@ -70,7 +70,7 @@ $(function() {
 		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
 		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
 		if (isAppCancel) {
-			location.href = "../market/exCancel.jsp?num=" + num;
+			location.href = "../market/expstudyCancel.jsp?num=" + num;
 		}
 	});
 });

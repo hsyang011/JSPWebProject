@@ -113,6 +113,30 @@ public class MemberDAO extends JDBConnect {
 		return dto;
 	}
 	
+	// 아이디로 주문자 정보 가져오기
+	public MemberDTO getMemberDTO(String uid) {
+		MemberDTO dto = new MemberDTO();
+		String query = " SELECT * FROM member WHERE id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, uid);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				dto.setName(rs.getString("name"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setEmail(rs.getString("email"));
+				dto.setZipcode(rs.getString("zipcode"));
+				dto.setAddr1(rs.getString("addr1"));
+				dto.setAddr2(rs.getString("addr2"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
 	// 아이디 찾기
 	public String getMemberId(String uname, String uemail) {
 		String id = null;
