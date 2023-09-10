@@ -150,7 +150,7 @@ for (BasketDTO dto : basketInfo) {
 
 				
 				<!-- 2번째 폼 -->
-				<form method="post" action="../market/paymentProcess.do" name="secondFrm">
+				<form method="post" action="../market/paymentProcess.do?paymentAmount=<%= totalPrice %>" name="secondFrm">
 				<p class="con_tit"><img src="../images/market/basket_title03.gif" /></p>
 				<p style="text-align:right">배송지 정보가 주문자 정보와 동일합니까? 예<input type="radio" name="chk" class="chk" value="1" checked /> 아니오<input type="radio" name="chk" class="chk" /></p>
 				<table cellpadding="0" cellspacing="0" border="0" class="con_table" style="width:100%;" style="margin-bottom:50px;">
