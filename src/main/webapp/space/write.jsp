@@ -7,6 +7,8 @@
 String name = session.getAttribute("UserName").toString();
 String email = session.getAttribute("UserEmail").toString();
 String tname = request.getParameter("tname");
+
+String id = session.getAttribute("UserId").toString();
 %>
 <script type="text/javascript">
 function formValidate(frm) {

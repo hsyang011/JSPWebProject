@@ -218,4 +218,19 @@ public class MemberDAO extends JDBConnect {
 		return result;
 	}
 	
+	// 유저의 권한 얻어오기
+	public String getGrade(String id) {
+		String grade = "";
+		String query = " SELECT grade FROM member WHERE id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+		} catch (Exception e) {
+			System.out.println("유저의 권한 얻어오는 중 예외 발생");
+			e.printStackTrace();
+		}
+		return grade;
+	}
+	
 }
