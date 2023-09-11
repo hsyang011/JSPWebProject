@@ -9,7 +9,7 @@
 <img src="../images/menu/5.jpg" alt="" usemap="#LNB"/>
 <map name="LNB">
 	<area shape="rect" alt="" title="" coords="10,9,134,44" href="../space/list.jsp?tname=notice_board" target="" />
-	<area shape="rect" alt="" title="" coords="10,48,134,86" href="../space/list.jsp?tname=calendar_board" target="" />
+	<area shape="rect" alt="" title="" coords="10,48,134,86" href="../space/calendar.jsp?tname=calendar_board" target="" />
 	<area shape="rect" alt="" title="" coords="10,90,134,125" href="../space/list.jsp?tname=free_board" target="" />
 	<area shape="rect" alt="" title="" coords="10,132,134,166" href="../space/list.jsp?tname=photo_board" target="" />
 	<area shape="rect" alt="" title="" coords="10,172,134,207" href="../space/list.jsp?tname=info_board" target="" />
