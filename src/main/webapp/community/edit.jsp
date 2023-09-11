@@ -84,7 +84,7 @@ function formValidate(frm) {
 		<th class="text-center" 
 			style="vertical-align:middle;">패스워드</th>
 		<td>
-			<input type="text" class="form-control" name="pass" 
+			<input type="password" class="form-control" name="pass" 
 				style="width:200px;" />
 		</td>
 	</tr>

@@ -33,7 +33,7 @@ public class MemberDAO extends JDBConnect {
 	// 회원가입
 	public int joinInsert(MemberDTO dto) {
 		int result = 0;
-		String query = " INSERT INTO member VALUES "
+		String query = " INSERT INTO member (name, id, pass, tel, mobile, email, mailing, zipcode, addr1, addr2) VALUES "
 				+ " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		try {
 			psmt = con.prepareStatement(query);

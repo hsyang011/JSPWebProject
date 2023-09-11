@@ -31,7 +31,7 @@ int totalPrice = 0;
 				</div>
 				<table cellpadding="0" cellspacing="0" border="0" class="basket_list">
 					<colgroup>
-						<col width="7%" />
+						<!-- <col width="7%" /> -->
 						<col width="10%" />
 						<col width="*" />
 						<col width="10%" />
@@ -43,7 +43,7 @@ int totalPrice = 0;
 					</colgroup>
 					<thead>
 						<tr>
-							<th>선택</th>
+							<!-- <th>선택</th> -->
 							<th>이미지</th>
 							<th>상품명</th>
 							<th>판매가</th>
@@ -60,12 +60,12 @@ int totalPrice = 0;
 for (BasketDTO dto : basketInfo) {
 %>
 						<tr>
-							<td><input type="checkbox" name="chk" value="1" /></td>
+							<!-- <td><input type="checkbox" name="chk" value="1" /></td> -->
 							<td><img src="../images/market/cake_img1.jpg" /></td>
 							<td><%= new ProductsDAO().getProductInfo(dto.getNum()).getProduct_name() %></td>
 							<td><%= new ProductsDAO().getProductInfo(dto.getNum()).getProduct_price() %>원</td>
 							<td><img src="../images/market/j_icon.gif" />&nbsp;<%= (Integer.parseInt(new ProductsDAO().getProductInfo(dto.getNum()).getProduct_price().replace(",","").replace(" ","")) / 100) * Integer.parseInt(dto.getSelected_quantity()) %>원</td>
-							<td><input type="text" name="" value="<%= dto.getSelected_quantity() %>" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
+							<td><input type="text" name="" value="<%= dto.getSelected_quantity() %>" readonly class="basket_num" />&nbsp;<a href=""><!-- <img src="../images/market/m_btn.gif" /> --></a></td>
 							<td>무료배송</td>
 							<td>[조건]</td>
 							<td><span><%= dto.getTotal_price() %>원<span></td>

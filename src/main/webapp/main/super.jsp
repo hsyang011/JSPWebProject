@@ -1,3 +1,4 @@
+<%@page import="market.PaymentDTO"%>
 <%@page import="utils.JSFunction"%>
 <%@page import="market.ExpstudyDTO"%>
 <%@page import="market.BlueCleaningDTO"%>
@@ -18,6 +19,7 @@ if (!(session.getAttribute("UserGrade") != null && session.getAttribute("UserGra
 List<MemberDTO> members = (ArrayList<MemberDTO>)request.getAttribute("members");
 List<BlueCleaningDTO> bcList = (ArrayList<BlueCleaningDTO>)request.getAttribute("bcList");
 List<ExpstudyDTO> exList = (ArrayList<ExpstudyDTO>)request.getAttribute("exList");
+List<PaymentDTO> paList = (ArrayList<PaymentDTO>)request.getAttribute("paList");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -58,7 +60,7 @@ $(function() {
 	
 	// 블루클리닉 신청 접수 취소
 	$(".bcCancel").click(function(e) {
-		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().text();
 		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
 		if (isAppCancel) {
 			location.href = "../market/bluecleaningCancel.jsp?num=" + num;
@@ -67,10 +69,19 @@ $(function() {
 	
 	// 체험학습신청 접수 취소
 	$(".exCancel").click(function(e) {
-		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text();
+		var num = $(e.target).parent().prev().prev().prev().prev().prev().prev().prev().text();
 		var isAppCancel = confirm(num + "번 접수를 정말로 취소하시겠습니까?");
 		if (isAppCancel) {
 			location.href = "../market/expstudyCancel.jsp?num=" + num;
+		}
+	});
+	
+	// 결제 취소
+	$(".paCancel").click(function(e) {
+		var id = $(e.target).parent().prev().prev().prev().prev().prev().text();
+		var isPaCancel = confirm(id + "회원의 결제 요청을 정말로 취소하시겠습니까?");
+		if (isPaCancel) {
+			location.href = "../market/paymentCancel.jsp?id=" + id;
 		}
 	});
 });
@@ -97,7 +108,7 @@ $(function() {
 			<thead>
 			<tr class="success">
 				<th class="text-center">아이디</th>
-				<th class="text-left">이름</th>
+				<th class="text-center">이름</th>
 				<th class="text-center">이메일</th>
 				<th class="text-center">강제 퇴출</th>
 			</tr>
@@ -110,7 +121,7 @@ for (MemberDTO dto : members) {
 %>
 			<tr>
 				<td class="text-center"><%= dto.getId() %></td>
-				<td class="text-left"><%= dto.getName() %></td>
+				<td class="text-center"><%= dto.getName() %></td>
 				<td class="text-center"><%= dto.getEmail() %></td>
 				<td class="text-center"><a href="javascript:void(0);" class="kick">퇴출</a></td>
 			</tr>
@@ -137,16 +148,11 @@ for (MemberDTO dto : members) {
 			<tr class="success">
 				<th class="text-center">번호</th>
 				<th class="text-center">아이디</th>
-				<th class="text-left">고객명/회사명</th>
-				<th class="text-center">청소할 곳 주소</th>
-				<th class="text-center">연락처</th>
-				<th class="text-center">휴대전화</th>
-				<th class="text-center">이메일</th>
+				<th class="text-center">고객명/회사명</th>
 				<th class="text-center">청소종류</th>
 				<th class="text-center">분양평수/등기평수</th>
 				<th class="text-center">청소희망날짜</th>
 				<th class="text-center">접수종류 구분</th>
-				<th class="text-center">기타</th>
 				<th class="text-center">접수 취소</th>
 			</tr>
 			</thead>
@@ -159,16 +165,11 @@ for (BlueCleaningDTO dto : bcList) {
 			<tr>
 				<td class="text-center"><%= dto.getNum() %></td>
 				<td class="text-center"><%= dto.getId() %></td>
-				<td class="text-left"><%= dto.getName() %></td>
-				<td class="text-center"><%= dto.getAddr() %></td>
-				<td class="text-center"><%= dto.getTel() %></td>
-				<td class="text-center"><%= dto.getMobile() %></td>
-				<td class="text-center"><%= dto.getEmail() %></td>
+				<td class="text-center"><%= dto.getName() %></td>
 				<td class="text-center"><%= dto.getCleaning_type() %></td>
 				<td class="text-center"><%= dto.getArea() %></td>
 				<td class="text-center"><%= dto.getCleaning_date() %></td>
 				<td class="text-center"><%= dto.getApplication_type() %></td>
-				<td class="text-center"><%= dto.getEtc() %></td>
 				<td class="text-center"><a href="javascript:void(0);" class="bcCancel">취소</a></td>
 			</tr>
 <%
@@ -194,19 +195,11 @@ for (BlueCleaningDTO dto : bcList) {
 			<tr class="success">
 				<th class="text-center">번호</th>
 				<th class="text-center">아이디</th>
-				<th class="text-left">고객명/회사명</th>
-				<th class="text-center">장애유무</th>
-				<th class="text-center">주요장애유형</th>
-				<th class="text-center">보장구 사용유무</th>
-				<th class="text-center">보장구 명</th>
-				<th class="text-center">연락처</th>
-				<th class="text-center">휴대전화</th>
-				<th class="text-center">이메일</th>
+				<th class="text-center">고객명/회사명</th>
 				<th class="text-center">케잌체험</th>
 				<th class="text-center">쿠키체험</th>
 				<th class="text-center">체험희망날짜</th>
 				<th class="text-center">접수종류 구분</th>
-				<th class="text-center">기타</th>
 				<th class="text-center">접수 취소</th>
 			</tr>
 			</thead>
@@ -219,20 +212,55 @@ for (ExpstudyDTO dto : exList) {
 			<tr>
 				<td class="text-center"><%= dto.getNum() %></td>
 				<td class="text-center"><%= dto.getId() %></td>
-				<td class="text-left"><%= dto.getName() %></td>
-				<td class="text-center"><%= dto.getImpaired() %></td>
-				<td class="text-center"><%= dto.getImpaired_type() %></td>
-				<td class="text-center"><%= dto.getAssist() %></td>
-				<td class="text-center"><%= dto.getAssist_type() %></td>
-				<td class="text-center"><%= dto.getTel() %></td>
-				<td class="text-center"><%= dto.getMobile() %></td>
-				<td class="text-center"><%= dto.getEmail() %></td>
+				<td class="text-center"><%= dto.getName() %></td>
 				<td class="text-center"><%= dto.getExp_cake() %></td>
 				<td class="text-center"><%= dto.getExp_cookie() %></td>
 				<td class="text-center"><%= dto.getExpstudy_date() %></td>
 				<td class="text-center"><%= dto.getApplication_type() %></td>
-				<td class="text-center"><%= dto.getEtc() %></td>
 				<td class="text-center"><a href="javascript:void(0);" class="exCancel">취소</a></td>
+			</tr>
+<%
+}
+%>
+			</tbody>
+			</table>
+		</div>
+		
+		<!-- 결제 정보 리스트 -->
+		<div class="row container">
+			<h5>※결제 정보 리스트※</h5>
+			<!-- 게시판리스트부분 -->
+			<table class="table table-bordered table-hover">
+			<%-- <colgroup>
+				<col width="100px"/>
+				<col width="120px"/>
+				<col width="200px"/>
+				<col width="80px"/>
+			</colgroup> --%>
+			
+			<thead>
+			<tr class="success">
+				<th class="text-center">아이디</th>
+				<th class="text-center">성명</th>
+				<th class="text-center">우편번호</th>
+				<th class="text-center">결제금액</th>
+				<th class="text-center">결제방식</th>
+				<th class="text-center">결제 취소</th>
+			</tr>
+			</thead>
+			
+			<tbody>
+			<!-- 리스트반복 -->
+<%
+for (PaymentDTO dto : paList) {
+%>
+			<tr>
+				<td class="text-center"><%= dto.getId() %></td>
+				<td class="text-center"><%= dto.getName() %></td>
+				<td class="text-center"><%= dto.getZipcode() %></td>
+				<td class="text-center"><%= dto.getPayment_amount() %></td>
+				<td class="text-center"><%= dto.getPayment_type() %></td>
+				<td class="text-center"><a href="javascript:void(0);" class="paCancel">결제 취소</a></td>
 			</tr>
 <%
 }

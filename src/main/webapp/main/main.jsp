@@ -58,7 +58,7 @@ function formValidate(frm) {
 						</tr>
 						<tr>
 							<th><img src="../images/login_tit02.gif" alt="패스워드" /></th>
-							<td><input type="text" name="user_pw" value="" class="login_input" tabindex="2" /></td>
+							<td><input type="password" name="user_pw" value="" class="login_input" tabindex="2" /></td>
 						</tr>
 					</table>
 					<p>
@@ -73,7 +73,7 @@ function formValidate(frm) {
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;">${ UserName }님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
 						<a href="../member/edit.jsp"><img src="../images/login_btn04.gif" /></a>
-						<a href="../center/sub07.jsp"><img src="../images/login_btn05.gif" /></a>
+						<a href="../member/logout.jsp"><img src="../images/login_btn05.gif" /></a>
 					</p>
 </c:if> 
 				</div>
@@ -82,7 +82,7 @@ function formValidate(frm) {
 				<p class="main_title"><img src="../images/main_title02.gif" alt="공지사항 NOTICE" /><a href="../space/list.jsp?tname=notice_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
 <c:forEach items="${ notice }" var="row">
-	<li><p><a href="../space/view.jsp?num=${ row.num }&tname=notice_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
+	<li><p style="width: 230px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="../space/view.jsp?num=${ row.num }&tname=notice_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
 </c:forEach>
 				</ul>
 			</div>
@@ -90,7 +90,7 @@ function formValidate(frm) {
 				<p class="main_title"><img src="../images/main_title03.gif" alt="자유게시판 FREE BOARD" /><a href="../space/list.jsp?tname=free_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
 <c:forEach items="${ free }" var="row">
-	<li><p><a href="../space/view.jsp?num=${ row.num }&tname=free_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
+	<li><p style="width: 230px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="../space/view.jsp?num=${ row.num }&tname=free_board">${ row.title }</a><span>${ row.postdate }</span></p></li>
 </c:forEach>
 				</ul>
 			</div>
@@ -195,7 +195,7 @@ function formValidate(frm) {
 				</div>
 			</div>
 			<div class="main_con_right">
-				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="/space/sub04.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="../space/list.jsp?tname=photo_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_photo_list">
 					<li>
 						<dl>

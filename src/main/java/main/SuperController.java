@@ -13,6 +13,8 @@ import market.BlueCleaningDAO;
 import market.BlueCleaningDTO;
 import market.ExpstudyDAO;
 import market.ExpstudyDTO;
+import market.PaymentDAO;
+import market.PaymentDTO;
 import membership.MemberDAO;
 import membership.MemberDTO;
 
@@ -38,10 +40,16 @@ public class SuperController extends HttpServlet {
 		List<ExpstudyDTO> exList = exdao.allApp();
 		exdao.close();
 		
+		// 결제요청을 모두 가져온다.
+		PaymentDAO padao = new PaymentDAO();
+		List<PaymentDTO> paList = padao.allPayment();
+		padao.close();
+		
 		// 리퀘스트영역에 저장한 후 super.jsp로 포워드 한다.
 		req.setAttribute("members", members);
 		req.setAttribute("bcList", bcList);
 		req.setAttribute("exList", exList);
+		req.setAttribute("paList", paList);
 		req.getRequestDispatcher("/main/super.jsp").forward(req, resp);
 	}
 	
