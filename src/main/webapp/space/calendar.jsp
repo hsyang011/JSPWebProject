@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="board.CalendarDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="board.CalendarDAO"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,13 +10,7 @@
 <style>
 	.day:hover { background-color: #E2E2E2; cursor: pointer; }
 </style>
-<script type="text/javascript">
-$(function() {
-	$(".day").click(function() {
-		alert("안녕");
-	});
-});
-</script>
+
 <%
 String tname = request.getParameter("tname");
 String pYear = request.getParameter("year");
@@ -24,11 +22,11 @@ Calendar calendar = Calendar.getInstance();
 int year = calendar.get(Calendar.YEAR);
 int month = calendar.get(Calendar.MONTH) + 1;
 // 파라미터로 들어온 값이 있다면 그 값으로 초기화한다.
-if (pYear != null) {
-	year = calendar.get(Calendar.YEAR);
+if (pYear!=null && !pYear.equals("")) {
+	year = Integer.parseInt(pYear);
 }
-if (pMonth != null) {
-	month = calendar.get(Calendar.MONTH) + 1;
+if (pMonth!= null && !pMonth.equals("")) {
+	month = Integer.parseInt(pMonth);
 }
 
 calendar.set(year, month - 1, 1);
@@ -44,6 +42,15 @@ System.out.println(year + "년" + month + "월 \n");
 System.out.println("일\t월\t화\t수\t목\t금\t토");
 int currentDay = 1;
 
+
+
+
+
+
+// 캘린더 일정 가져오기
+CalendarDAO dao = new CalendarDAO();
+List<CalendarDTO> scList = dao.allSchedule(Integer.toString(year), (month<10 ? "0"+month : ""+month));
+dao.close();
 // 달력 렌더링
 /* for (int i = 0; i <= 42; i++) {
     if (i < startDay) {
@@ -63,6 +70,20 @@ int currentDay = 1;
 } */
 
 %>
+
+<script type="text/javascript">
+function insertSch(day) {
+	var schedule = prompt(day + "일에 추가할 일정을 입력해주세요.");
+	if (schedule != null) {			
+		document.scheduleFrm.schedule.value = schedule;
+		document.scheduleFrm.day.value = day;
+		document.scheduleFrm.submit();
+	}
+}
+</script>
+<style>
+td{border:1px solid lightgray;}
+</style>
  <body>
 	<center>
 	<div id="wrap">
@@ -80,12 +101,35 @@ int currentDay = 1;
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;프로그램일정<p>
 				</div>
 				<div>
+<!-- 서블릿으로 전송할 폼값을 post방식으로 전송한다. -->
+<form method="post" action="../board/calendar.do" name="scheduleFrm">
+	<input type="hidden" name="schedule" value="" />
+	<input type="hidden" name="year" value="<%= year %>" />
+	<input type="hidden" name="month" value="<%= month %>" />
+	<input type="hidden" name="day" value="" />
+</form>
 
+<!-- 달력 페이지 -->
+<form>
+	<input class="border" style="border-radius: 5px;" type="text" name="year" />년&nbsp;
+	<input class="border" style="border-radius: 5px;" type="text" name="month" />월&nbsp;
+	<input class="border" type="submit" value="이동" style="margin-bottom: 2px;" />
+</form>
+<br />
 <div class="row">
 		<!-- 회원정보 리스트 -->
 		<div class="row container">
 			<!-- 게시판리스트부분 -->
-			<table class="table table-bordered">
+			<table class="table" style="border:1px solid lightgray; margin-left: 12px">
+			<colgroup>
+			    <col width="100px" />
+			    <col width="100px" />
+			    <col width="100px" />
+			    <col width="100px" />
+			    <col width="100px" />
+			    <col width="100px" />
+			    <col width="100px" />
+			</colgroup>
 			
 			<thead>
 			<tr class="success">
@@ -111,9 +155,25 @@ for (int i=1; i<=42; i++) {
 <%
     } else {
 %>
-       			<td class="text-left day"><%= currentDay %></td>
+       			<td class="text-left day" style="font-size: 10px" onclick="insertSch(<%= currentDay %>);"><%= currentDay %>
 <%
+		for (CalendarDTO dto : scList) {
+			String _day = Integer.parseInt(dto.getScheduleDate().split("-")[2])<10 ? dto.getScheduleDate().split("-")[2].substring(1) : dto.getScheduleDate().split("-")[2];
+			int day = Integer.parseInt(_day);
+			if (day == currentDay) {
+%>
+				<p>※ <%= dto.getName() %> <br /> - <%= dto.getSchedule() %></p>
+<%
+			}
+		}
         currentDay++;
+%>
+				</td>
+<%
+    }
+
+    if (currentDay > lastDay) {
+		break;
     }
 
     if (i%7 == 0) {
@@ -121,10 +181,6 @@ for (int i=1; i<=42; i++) {
        		</tr>
        		<tr height="100">
 <%  	
-    }
-
-    if (currentDay > lastDay) {
-		break;
     }
 }
 %>
