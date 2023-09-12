@@ -82,11 +82,28 @@ function initMap() {
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;센터소개&nbsp;>&nbsp;오시는길<p>
 				</div>
 				
-				<!-- 지도 api -->
-				<div id="map" style="width:100%;height:400px;">
-				
+				<div class="con_box">
+					<p class="con_tit"><img src="../images/center/sub07_tit01.gif" alt="오시는길" /></p>
+					
+					<!-- 지도 api -->
+					<div id="map" style="width:100%;height:400px;"></div><br /><br />
+					<p class="con_tit"><img src="../images/center/sub07_tit02.gif" alt="자가용 오시는길" /></p>
+					<div class="in_box">
+						<p class="dot_tit">서울 송파구 오금동</p>
+						<p style="margin-bottom:15px;">3호선 오금역 오금공원에서 성내천을 따라 성내천로 진입 → 성내천 5호선 개롱역과 거여역을 지나서 마천터널로 진입 → <br/> 위례대로를 타고 감일교차로(회전교차로)에서 270도 좌회전 </p>
+						<p class="dot_tit">경기도 하남시 학암동</p>
+						<p style="margin-bottom:15px;">8호선 복정역에서 복정역교차로 진입 → 헌릉로를 거쳐서 위례터널로 진입 → 위례터널에서 위례대로로 우회전 <br /> → 위례스타필드와 위례중앙광장을 거쳐서 북위례 진입 → 그대로 직진하여 감일교차로(회전교차로)에서 우회전 </p>
+					</div>
+					<p class="con_tit"><img src="../images/center/sub07_tit03.gif" alt="대중교통 이용시" /></p>
+					<div class="in_box">
+						<p class="dot_tit">버스</p>
+						<p style="margin-bottom:15px;">31번, 33번, 35번, 38번, 89번, 9202번 → 포웰시티 푸르지오 라포레에서 하차<br />3316번, 3318번 → 송파파크데일 2단지에서 하차</p>
+						<p class="dot_tit">지하철</p>
+						<p style="margin-bottom:15px;">3호선 오금역 6번출구에서 3318번 환승 후 송파파크데일 2단지에서 하차<br />3호선 오금역 2번출구에서 89번으로 환승 후 포웰시티 푸르지오 라포레에서 하차<br />5호선 마천역에서 하차 후 도보 15분</p>
+						<p class="dot_tit">마을버스</p>
+						<p>8번</p>
+					</div>
 				</div>
-				
 				
 				
 			</div>
