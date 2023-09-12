@@ -20,8 +20,10 @@ public class CalendarController extends HttpServlet {
 		// 세션영역에 저장된 아이디와 이름을 받는다.
 		HttpSession sess = req.getSession();
 		if (sess.getAttribute("UserId") == null) {
-			JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", "../member/login.jsp");
+			JSFunction.alertLocation(resp, "로그인 후 이용해주십시오.", "../member/login.jsp");
+			return;
 		}
+		
 		String id = sess.getAttribute("UserId").toString();
 		String name = sess.getAttribute("UserName").toString();
 		// 파라미터로 값 전송 받는다.

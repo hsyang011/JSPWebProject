@@ -56,7 +56,12 @@ if (new MemberDAO().getMemberDTO(id, pass).getId() != null) {
 	
 	
 	if (result == 1) {
-		String url = "./list.jsp?tname=" + tname;
+		String url = "";
+		if (tname.equals("photo_board")) {
+			url = "./photo.jsp?tname=" + tname;
+		} else {			
+			url = "./list.jsp?tname=" + tname;
+		}
 		JSFunction.alertLocation("글쓰기에 성공하였습니다!", url, out);
 	} else {
 		JSFunction.alertBack("글쓰기에 실패하였습니다.", out);

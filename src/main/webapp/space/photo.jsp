@@ -93,7 +93,7 @@ dao.close();
 <div class="row text-right" style="margin-bottom:20px;
 		padding-right:50px;">
 <!-- 검색부분 -->
-<form class="form-inline">
+<form class="form-inline">	
 <input type="hidden" name="tname" value="<%= tname %>" />
 	<div class="form-group">
 		<select name="keyField" class="form-control">
@@ -113,50 +113,76 @@ dao.close();
 </form>	
 </div>
 <div class="row">
-	<!-- 게시판리스트부분 -->
-	<table class="table table-bordered table-hover">
-	<colgroup>
-		<col width="80px"/>
-		<col width="*"/>
-		<col width="120px"/>
-		<col width="120px"/>
-		<col width="80px"/>
-		<col width="50px"/>
-	</colgroup>
-	
-	<thead>
-	<tr class="success">
-		<th class="text-center">번호</th>
-		<th class="text-left">제목</th>
-		<th class="text-center">작성자</th>
-		<th class="text-center">작성일</th>
-		<th class="text-center">조회수</th>
-		<th class="text-center">첨부</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	<!-- 리스트반복 -->
+<!-- 게시판리스트부분 -->
+<table class="table table-bordered table-hover">
+<!-- 리스트반복 -->
 <%
 // 게시물이 있을 때
 int virtualNum = 0;
 int countNum = 0;
-for (BoardDTO dto : boardLists) {
-	virtualNum = totalCount - (((pageNum - 1)*pageSize) + countNum++);
+int total = boardLists.size();
+int rows = total%5==0 ? total/5 : (total/5)+1;
+for (int i=0 ; i<rows ; i++) {
 %>
-	<tr>
-		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="view.jsp?num=<%= dto.getNum() %>&tname=<%= tname %>&virtualNum=<%= virtualNum %>"><%= dto.getTitle() %></a></td>
-		<td class="text-center"><%= dto.getName() %></td>
-		<td class="text-center"><%= dto.getPostdate() %></td>
-		<td class="text-center"><%= dto.getVisitcount() %></td>
-		<td class="text-center"><%= dto.getOfile()!=null ? "O" : "X" %></td>
-	</tr>
+<div class="row">
+	<%
+	if (i != rows-1) {
+		for (int u=i*5 ; u<(i+1)*5 ; u++) {
+			virtualNum = totalCount - (((pageNum - 1) * pageSize) 
+	    			+ countNum++);
+	%>
+	<div class="card imgCard col border-0 mx-auto">
+		<img style="height: 120px; cursor: pointer;" class="card-img-top" src="../uploads/<%= boardLists.get(u).getSfile() %>" alt="" onclick="location.href='./view.jsp?tname=<%= tname %>&num=<%= boardLists.get(u).getNum() %>&virtualNum=<%= virtualNum %>'" />
+		<div class="card-body text-center">
+			<p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+				<a href="./view.jsp?tname=photobard&num=<%= boardLists.get(u).getNum() %>&virtualNum=<%= virtualNum %>" style="text-decoration: none; font-size: 16px; font-weight: bold;" >
+				<%= boardLists.get(u).getTitle() %></a>
+			</p>
+			<p><%= boardLists.get(u).getPostdate() %></p>
+		</div>
+	</div>
+	<%
+		}
+	}
+	else{
+		for (int u=i*5 ; u<(i+1)*5 ; u++){
+			virtualNum = totalCount - (((pageNum - 1) * pageSize) 
+	    			+ countNum++);
+			if (u < total) {
+	%>
+	<div class="card imgCard col border-0 mx-auto">
+		<img style="height: 120px; cursor: pointer;" class="card-img-top" src="../uploads/<%= boardLists.get(u).getSfile() %>" alt="" onclick="location.href='./view.jsp?tname=<%= tname %>&num=<%= boardLists.get(u).getNum() %>&virtualNum=<%= virtualNum %>'" />
+		<div class="card-body text-center">
+			<p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+				<a href="./view.jsp?tname=<%= tname %>&num=<%= boardLists.get(u).getNum() %>&virtualNum=<%= virtualNum %>" style="text-decoration: none; font-size: 16px; font-weight: bold;" >
+				<%= boardLists.get(u).getTitle() %></a>
+			</p>
+			<p><%= boardLists.get(u).getPostdate() %></p>
+		</div>
+	</div>
+	<%
+			} else {
+	%>
+	<div class="card imgCard col border-0 mx-auto">
+		<p style="height: 120px; class="card-img-top" />
+		<div class="card-body text-center">
+			<p>
+				<p>
+				</p>
+			</p>
+			<p></p>
+		</div>
+	</div>
+	<%
+			}
+		}
+	}
+%>
+</div>
 <%
 }
 %>
-	</tbody>
-	</table>
+</table>
 </div>
 <div class="row text-right" style="padding-right:50px;">
 	<!-- 각종 버튼 부분 -->

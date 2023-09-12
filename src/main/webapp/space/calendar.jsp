@@ -110,9 +110,9 @@ td{border:1px solid lightgray;}
 </form>
 
 <!-- 달력 페이지 -->
-<form>
-	<input class="border" style="border-radius: 5px;" type="text" name="year" />년&nbsp;
-	<input class="border" style="border-radius: 5px;" type="text" name="month" />월&nbsp;
+<form class="text-center">
+	<input class="border" style="border-radius: 5px; width: 80px;" type="text" name="year" value="<%= year %>" />년&nbsp;
+	<input class="border" style="border-radius: 5px; width: 60px;" type="text" name="month" value="<%= month %>" />월&nbsp;
 	<input class="border" type="submit" value="이동" style="margin-bottom: 2px;" />
 </form>
 <br />

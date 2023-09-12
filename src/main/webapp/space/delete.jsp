@@ -30,8 +30,12 @@ if (sessionId.equals(dto.getId())) {
 	dao.close();
 	
 	if (delResult == 1) {
-		String url = "./list.jsp?tname=" + tname;
-		/* 게시물이 삭제되면 목록으로 이동한다. */
+		String url = "";
+		if (tname.equals("photo_board")) {
+			url = "./photo.jsp?tname=" + tname;
+		} else {			
+			url = "./list.jsp?tname=" + tname;
+		}
 		JSFunction.alertLocation("삭제되었습니다.", url, out);
 	} else {
 		/* 삭제에 실패하면 뒤로 이동한다. */

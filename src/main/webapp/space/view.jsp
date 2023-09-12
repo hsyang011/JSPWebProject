@@ -83,7 +83,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			<%= virtualNum %>
+			<%= dto.getName() %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">작성일</th>
@@ -154,8 +154,17 @@ function deletePost() {
 	<%
 	}
 	%>
-	<button type="button" class="btn btn-warning" 
-		onclick="location.href='./list.jsp?tname=<%= tname %>';">리스트보기</button>
+	<%
+	if (tname.equals("photo_board")) {	
+	%>
+		<button type="button" class="btn btn-warning" onclick="location.href='./photo.jsp?tname=<%= tname %>';">썸네일보기</button>
+	<%
+	} else {
+	%>
+		<button type="button" class="btn btn-warning" onclick="location.href='./list.jsp?tname=<%= tname %>';">리스트보기</button>
+	<%	
+	}
+	%>
 </div>
 </form> 
 

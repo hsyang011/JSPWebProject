@@ -39,16 +39,17 @@ public class MainController extends HttpServlet {
 		// 공지사항 최근 게시물 4개 인출(board)
 		param.put("tname", "notice_board");
 		List<BoardDTO> notice = dao.selectListPage(param);
-		param.put("tname", "calendar_board");
-		List<BoardDTO> calendar = dao.selectListPage(param);
 		param.put("tname", "free_board");
 		List<BoardDTO> free = dao.selectListPage(param);
+		// 사진게시판 최근 게시물 6개 인출
+		param.put("end", 6);
 		param.put("tname", "photo_board");
 		List<BoardDTO> photo = dao.selectListPage(param);
 		
 		// 각 게시판을 리퀘스트 영역에 저장
 		req.setAttribute("notice", notice);
 		req.setAttribute("free", free);
+		req.setAttribute("photo", photo);
 		
 		// 포워드할 페이지로 전송할 속성명 저장
 		req.setAttribute("savedId", savedId);

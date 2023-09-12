@@ -101,7 +101,7 @@ function formValidate(frm) {
 				<p class="main_title"><img src="../images/main_title04.gif" alt="월간일정 CALENDAR" /></p>
 				<img src="../images/main_tel.gif" />
 			</div>
-			<div class="main_con_center">
+			<div class="main_con_center" onclick="location.href='../space/calendar.jsp?tname=calendar_board'" style="cursor: pointer;">
 				<p class="main_title" style="border:0px; margin-bottom:0px;"><img src="../images/main_title05.gif" alt="월간일정 CALENDAR" /></p>
 				<div class="cal_top">
 					<table cellpadding="0" cellspacing="0" border="0">
@@ -195,44 +195,15 @@ function formValidate(frm) {
 				</div>
 			</div>
 			<div class="main_con_right">
-				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="../space/list.jsp?tname=photo_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="../space/photo.jsp?tname=photo_board"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_photo_list">
+<c:forEach items="${ photo }" var="row">
 					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
+						<dl style="margin-left: 3px">
+							<dt><a href="../space/view.jsp?num=${ row.num }&tname=photo_board"><img src="../uploads/${ row.sfile }" width="95" height="95" /></a></dt>
 						</dl>
 					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
+</c:forEach>
 				</ul>
 			</div>
 		</div>
