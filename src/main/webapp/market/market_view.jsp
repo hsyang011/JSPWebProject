@@ -65,7 +65,6 @@ int reward = Integer.parseInt(price) / 100;
 					</div>
 					</form>
 				</div>
-				<img src="../images/market/cake_img.JPG" />
 
 			</div>
 		</div>

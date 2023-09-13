@@ -8,7 +8,7 @@ var map = null;
 function initMap() {
     map = new naver.maps.Map('map', {
     	// 지도 중앙 위치 : 위도, 경도 설정
-    	center : new naver.maps.LatLng( 37.4977689, 127.1631099 ),
+    	center : new naver.maps.LatLng( 37.480004, 127.148338 ),
 
     	// 줌 설정 : 1~14, 수치가 클수록 지도 확대(줌인), 이 옵션 생략시 기본값 9
     	zoom : 16,
@@ -25,7 +25,7 @@ function initMap() {
     	mapTypeControl : true,
     });
     
-    var position = new naver.maps.LatLng(37.4977689, 127.1631099);
+    var position = new naver.maps.LatLng(37.480004, 127.148338);
     
     var markerOptions = {
     	    position: position,
@@ -43,8 +43,8 @@ function initMap() {
    	
    	var contentString = [
         '<div class="iw_inner" style="padding: 10px; margin-top: 10px">',
-        '   <h6>우리집</h6>',
-        '   <p>경기도 하남시 감일백제로 20 (포웰시티 푸르지오 라포레)<br />',
+        '   <h6>위례동 스타필드</h6>',
+        '   <p>경기도 하남시 위례대로 200<br />',
         '   </p>',
         '</div>'
     ].join('');
@@ -90,18 +90,18 @@ function initMap() {
 					<p class="con_tit"><img src="../images/center/sub07_tit02.gif" alt="자가용 오시는길" /></p>
 					<div class="in_box">
 						<p class="dot_tit">서울 송파구 오금동</p>
-						<p style="margin-bottom:15px;">3호선 오금역 오금공원에서 성내천을 따라 성내천로 진입 → 성내천 5호선 개롱역과 거여역을 지나서 마천터널로 진입 → <br/> 위례대로를 타고 감일교차로(회전교차로)에서 270도 좌회전 </p>
+						<p style="margin-bottom:15px;">3호선 오금역 오금공원에서 성내천을 따라 성내천로 진입 → 성내천 5호선 개롱역과 거여역을 지나서 마천터널로 진입 → <br/> 위례대로를 타고 직진 </p>
 						<p class="dot_tit">경기도 하남시 학암동</p>
-						<p style="margin-bottom:15px;">8호선 복정역에서 복정역교차로 진입 → 헌릉로를 거쳐서 위례터널로 진입 → 위례터널에서 위례대로로 우회전 <br /> → 위례스타필드와 위례중앙광장을 거쳐서 북위례 진입 → 그대로 직진하여 감일교차로(회전교차로)에서 우회전 </p>
+						<p style="margin-bottom:15px;">8호선 복정역에서 복정역교차로 진입 → 헌릉로를 거쳐서 위례터널로 진입 → 위례터널에서 위례대로로 우회전 <br /> → 위례대로를 타고 직진 </p>
 					</div>
 					<p class="con_tit"><img src="../images/center/sub07_tit03.gif" alt="대중교통 이용시" /></p>
 					<div class="in_box">
 						<p class="dot_tit">버스</p>
-						<p style="margin-bottom:15px;">31번, 33번, 35번, 38번, 89번, 9202번 → 포웰시티 푸르지오 라포레에서 하차<br />3316번, 3318번 → 송파파크데일 2단지에서 하차</p>
+						<p style="margin-bottom:15px;">3217번, 31번, 38번, 200번, 231번, 9202번 → 스타필드시티 위례 정류장에서 하차<br /></p>
 						<p class="dot_tit">지하철</p>
-						<p style="margin-bottom:15px;">3호선 오금역 6번출구에서 3318번 환승 후 송파파크데일 2단지에서 하차<br />3호선 오금역 2번출구에서 89번으로 환승 후 포웰시티 푸르지오 라포레에서 하차<br />5호선 마천역에서 하차 후 도보 15분</p>
+						<p style="margin-bottom:15px;">5호선 거여역에서 하차 후 도보 20분&nbsp;&nbsp;3호선 가락시장역에서 하차 후 3217번, 3420번, 31번, 345번으로 환승<br />8호선 복정역에서 31번, 38번으로 환승<br /></p>
 						<p class="dot_tit">마을버스</p>
-						<p>8번</p>
+						<p>위례-01번</p>
 					</div>
 				</div>
 				

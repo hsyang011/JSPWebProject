@@ -50,7 +50,7 @@ for (ProductsDTO dto : products) {
 						<form method="post" action="../market/basket.do">
 						<input type="hidden" name="num" value="<%= dto.getNum() %>" />
 						<td><input type="checkbox" name="chk" value="1" /></td>
-						<td><a href="../market/market_view.do?num=<%= dto.getNum() %>"><img src="<%= dto.getProduct_image() %>" /></a></td>
+						<td><a href="../market/market_view.do?num=<%= dto.getNum() %>"><img src="<%= dto.getProduct_image() %>" width="120" /></a></td>
 						<td class="t_left"><a href="../market/market_view.do?num=<%= dto.getNum() %>"><%= dto.getProduct_name() %></a></td>
 						<td class="p_style"><%= dto.getProduct_price() %></td>
 						<td><input type="text" name="count" value="1" class="n_box" /></td>

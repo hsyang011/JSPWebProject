@@ -101,7 +101,7 @@ for (BasketDTO dto : basketInfo) {
 %>
 						<tr>
 							<!-- <td><input type="checkbox" name="chk" value="1" /></td> -->
-							<td><img src="../images/market/cake_img1.jpg" /></td>
+							<td><img src="<%= new ProductsDAO().getProductInfo(dto.getNum()).getProduct_image() %>" width="60" /></td>
 							<td><%= new ProductsDAO().getProductInfo(dto.getNum()).getProduct_name() %></td>
 							<td><%= new ProductsDAO().getProductInfo(dto.getNum()).getProduct_price() %>원</td>
 							<td><img src="../images/market/j_icon.gif" />&nbsp;<%= (Integer.parseInt(new ProductsDAO().getProductInfo(dto.getNum()).getProduct_price().replace(",","").replace(" ","")) / 100) * Integer.parseInt(dto.getSelected_quantity()) %>원</td>

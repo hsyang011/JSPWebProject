@@ -15,6 +15,6 @@
   </context-param>
   <context-param>
   	<param-name>PAGES_PER_BLOCK</param-name>
-  	<param-value>5</param-value>
+  	<param-value>2</param-value>
   </context-param>
 </web-app>
